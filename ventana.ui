@@ -205,12 +205,7 @@ color: rgb(255,255,255)</string>
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QTableWidget::item {
-	font-size: 20px;
-	border-bottom: 1px solid #cccccc;
-	background-color: rgb(62, 62, 62);
-	color:rgb(255,255,255);
-}</string>
+     <string notr="true"/>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
@@ -227,6 +222,9 @@ color: rgb(255,255,255)</string>
     <property name="gridStyle">
      <enum>Qt::SolidLine</enum>
     </property>
+    <property name="rowCount">
+     <number>0</number>
+    </property>
     <property name="columnCount">
      <number>4</number>
     </property>
@@ -239,6 +237,28 @@ color: rgb(255,255,255)</string>
     <column>
      <property name="text">
       <string>Linea</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="foreground">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Posición</string>
      </property>
      <property name="font">
       <font>
@@ -291,28 +311,6 @@ color: rgb(255,255,255)</string>
     <column>
      <property name="text">
       <string>Valor</string>
-     </property>
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>12</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="foreground">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Posición</string>
      </property>
      <property name="font">
       <font>
