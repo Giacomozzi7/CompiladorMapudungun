@@ -1,23 +1,19 @@
 import ply.lex as lex
-import re
-import codecs
-import os
-import sys
+from instrucciones import *
 
 #Palabras reservadas y Tokens
-
 aRes = [
-    'BEGIN', #Begin
-    'FOR',   #For
-    'END',   #End
-    'IF',    #If
-    'ELSE',  #Else
-    'NOT',   #Not
-    'WHILE', #While
-    'IN',    #In
-    'PRINT', #Print
-    'NUM',   #Int
-    'STRING' #String
+    'ANTU', #Begin
+    'CHUMAL',   #For
+    'KUYEN',   #End
+    'MAY',    #If
+    'KMAY',  #Else
+    'KENO',   #Not
+    'TUNTENTU', #While
+    'PONWITU',    #In
+    'PEKENUN', #Print
+    'RAKIN',   #Int
+    'NEMEL' #String
 ]
 
 tokens = aRes + ['ID','INT','FLOTANTE','MAS','MENOS','POR','DIVIDIDO','ASIGNACION',
@@ -48,7 +44,7 @@ t_CONCAT = r'&'
 #FUNCION PARA EXPRESION IDENTIFICADOR
 def t_ID(t):
     r'\b[a-zA-Z_][a-zA-Z0-9_]*\b'
-    if t.value in aRes: t.type = t.value.upper()
+    if t.value.upper() in aRes: t.type = t.value.upper()
     else: t.type = 'ID'
     return t
 
@@ -65,7 +61,7 @@ def t_CADENA_TEXTO(t):
 
 #FUNCION PARA EXPRESION COMENTARIO
 def t_COMENTARIO(t):
-    r'\@.*'
+    r'\!.*'
     pass
 
 #FUNCION PARA EXPRESION FLOAT
@@ -97,7 +93,7 @@ def t_error(t):
     aResultado.append(estado)
     t.lexer.skip(1)
 
-def prueba(sData):
+def analizadorLexico(sData):
     global aResultado
     an = lex.lex()
     an.input(sData)
@@ -109,77 +105,6 @@ def prueba(sData):
         aResultado.append(estado)
     return aResultado
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def buscarFicheros(directorio):
-#     ficheros = []
-#     numArchivo = ''
-#     respuesta = False
-#     cont = 1
-
-#     for base, dirs, files in os.walk(directorio):
-#         ficheros.append(files)
-
-#     for file in files:
-#         print(str(cont)+". "+file)
-#         cont = cont+1
-    
-#     while respuesta == False:
-#         numArchivo = input('\nNumero del test:')
-#         for file in files:
-#             if file == files[int(numArchivo)-1]:
-#                 respuesta = True
-#                 break
-#     print(f"Has escogido {files[int(numArchivo)-1]}")
-
-#     return files[int(numArchivo)-1]
-
-
-
-# directorio = 'D://Documentos//GitHub//CompiladorMapudungun//data//pruebas//'
-# archivo = buscarFicheros(directorio)
-# test = directorio+archivo
-# fp = codecs.open(test,"r","utf-8")
-# cadena = fp.read()
-# fp.close()
-
-# analizador = lex.lex()
-
-# analizador.input(cadena)
-
-# while True:
-#     tok = analizador.token()
-#     if not tok: break
-#     print (tok)
 
 
 
