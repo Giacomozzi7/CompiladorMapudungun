@@ -222,5 +222,5 @@ def generarInstrucciones(instrucciones, ts) :
             elif isinstance(instr, May) : resolverMay(instr, ts)
             elif isinstance(instr, KMay) : resolverKMay(instr, ts)
             else : aResultado.append('>> ERROR: La instrucción es inválida')
-    except: aResultado.append('>> ERROR: instrucción no válida')
+    except: pass
     return aResultado

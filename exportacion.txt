@@ -1,0 +1,33 @@
+Exportacion resultados Compilador Mapudungun 
+
+Codigo del programa 
+#---------------------------------------------------------------------------#
+!archivo importado: prueba2.txt
+nemel w
+rakin h
+
+h = 1
+w = "cadena de texto"
+
+pekenunnn(w)
+
+Analizador Lexico
+#---------------------------------------------------------------------------#
+1. Linea: 2 Posicion: 32 Tipo Variable: NEMEL Valor: nemel
+2. Linea: 2 Posicion: 38 Tipo Variable: ID Valor: w
+3. Linea: 3 Posicion: 40 Tipo Variable: RAKIN Valor: rakin
+4. Linea: 3 Posicion: 46 Tipo Variable: ID Valor: h
+5. Linea: 5 Posicion: 49 Tipo Variable: ID Valor: h
+6. Linea: 5 Posicion: 51 Tipo Variable: ASIGNACION Valor: =
+7. Linea: 5 Posicion: 53 Tipo Variable: INT Valor: 1
+8. Linea: 6 Posicion: 55 Tipo Variable: ID Valor: w
+9. Linea: 6 Posicion: 57 Tipo Variable: ASIGNACION Valor: =
+10. Linea: 6 Posicion: 59 Tipo Variable: CADENA_TEXTO Valor: cadena de texto
+11. Linea: 8 Posicion: 78 Tipo Variable: ID Valor: pekenunnn
+12. Linea: 8 Posicion: 87 Tipo Variable: PAREIZQ Valor: (
+13. Linea: 8 Posicion: 88 Tipo Variable: ID Valor: w
+14. Linea: 8 Posicion: 89 Tipo Variable: PAREDER Valor: )
+ 
+Analizador Sintactico
+#---------------------------------------------------------------------------#
+>> ERROR: sintaxis incorrecta de tipo PAREIZQ cerca de (

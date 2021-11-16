@@ -1,0 +1,35 @@
+nemel w
+w = "cadena de texto"
+
+pekenun(w)
+
+rakin a
+rakin b
+rakin c
+
+a = 1
+b = 5
+
+!comentario1
+tuntentu(b > a)
+    antu
+        b = b - a
+        pekenun(b)
+    kuyen
+
+c = b*5+a
+pekenun(c)
+
+!comentario2
+may (c==6)
+    antu
+        pekenun ("c es 6")
+    kuyen
+kmay
+    antu
+        pekenun("c es distinto de 6")
+    kuyen
+
+
+		
+

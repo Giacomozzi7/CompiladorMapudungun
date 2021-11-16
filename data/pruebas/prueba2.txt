@@ -1,0 +1,9 @@
+nemel w
+rakin h
+
+h = 1
+w = "cadena de texto"
+
+pekenunnn(w)
+
+
