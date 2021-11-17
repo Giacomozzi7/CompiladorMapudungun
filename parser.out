@@ -15,36 +15,36 @@ Grammar
 Rule 0     S' -> init
 Rule 1     init -> instrucciones
 Rule 2     instrucciones -> instrucciones instruccion
-Rule 3     definicion_instr -> RAKIN ID
-Rule 4     definicion_instr -> NEMEL ID
+Rule 3     instDefinicion -> RAKIN ID
+Rule 4     instDefinicion -> NEMEL ID
 Rule 5     instrucciones -> instruccion
-Rule 6     instruccion -> pekenun_instr
-Rule 7     instruccion -> definicion_instr
-Rule 8     instruccion -> asignacion_instr
-Rule 9     instruccion -> tuntentu_instr
-Rule 10    instruccion -> may_instr
-Rule 11    instruccion -> kmay_instr
-Rule 12    pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER
-Rule 13    asignacion_instr -> ID ASIGNACION expresion_numerica
-Rule 14    asignacion_instr -> ID ASIGNACION expresion_cadena
-Rule 15    tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-Rule 16    may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-Rule 17    kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
-Rule 18    expresion_numerica -> expresion_numerica MAS expresion_numerica
-Rule 19    expresion_numerica -> expresion_numerica MENOS expresion_numerica
-Rule 20    expresion_numerica -> expresion_numerica POR expresion_numerica
-Rule 21    expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica
-Rule 22    expresion_numerica -> PAREIZQ expresion_numerica PAREDER
-Rule 23    expresion_numerica -> INT
-Rule 24    expresion_numerica -> FLOTANTE
-Rule 25    expresion_numerica -> ID
-Rule 26    expresion_cadena -> CADENA_TEXTO
-Rule 27    expresion_cadena -> expresion_numerica
-Rule 28    expresion_cadena -> expresion_cadena CONCAT expresion_cadena
-Rule 29    expresion_logica -> expresion_numerica MAYOR expresion_numerica
-Rule 30    expresion_logica -> expresion_numerica MENOR expresion_numerica
-Rule 31    expresion_logica -> expresion_numerica IGUALQUE expresion_numerica
-Rule 32    expresion_logica -> expresion_numerica DISTINTO expresion_numerica
+Rule 6     instruccion -> instPekenun
+Rule 7     instruccion -> instDefinicion
+Rule 8     instruccion -> instAsignacion
+Rule 9     instruccion -> instTuntentu
+Rule 10    instruccion -> instMay
+Rule 11    instruccion -> instKMay
+Rule 12    instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER
+Rule 13    instAsignacion -> ID ASIGNACION expNumero
+Rule 14    instAsignacion -> ID ASIGNACION expString
+Rule 15    instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+Rule 16    instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+Rule 17    instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+Rule 18    expNumero -> expNumero MAS expNumero
+Rule 19    expNumero -> expNumero MENOS expNumero
+Rule 20    expNumero -> expNumero POR expNumero
+Rule 21    expNumero -> expNumero DIVIDIDO expNumero
+Rule 22    expNumero -> PARENTESISIZQ expNumero PARENTESISDER
+Rule 23    expNumero -> INT
+Rule 24    expNumero -> FLOTANTE
+Rule 25    expNumero -> ID
+Rule 26    expString -> CADENA_TEXTO
+Rule 27    expString -> expNumero
+Rule 28    expString -> expString CONCAT expString
+Rule 29    eL -> expNumero MAYOR expNumero
+Rule 30    eL -> expNumero MENOR expNumero
+Rule 31    eL -> expNumero IGUALQUE expNumero
+Rule 32    eL -> expNumero DISTINTO expNumero
 
 Terminals, with rules where they appear
 
@@ -71,8 +71,8 @@ MAYOR                : 29
 MENOR                : 30
 MENOS                : 19
 NEMEL                : 4
-PAREDER              : 12 15 16 17 22
-PAREIZQ              : 12 15 16 17 22
+PARENTESISDER        : 12 15 16 17 22
+PARENTESISIZQ        : 12 15 16 17 22
 PEKENUN              : 12
 PONWITU              : 
 POR                  : 20
@@ -83,18 +83,18 @@ error                :
 
 Nonterminals, with rules where they appear
 
-asignacion_instr     : 8
-definicion_instr     : 7
-expresion_cadena     : 12 14 28 28
-expresion_logica     : 15 16 17
-expresion_numerica   : 13 18 18 19 19 20 20 21 21 22 27 29 29 30 30 31 31 32 32
+eL                   : 15 16 17
+expNumero            : 13 18 18 19 19 20 20 21 21 22 27 29 29 30 30 31 31 32 32
+expString            : 12 14 28 28
 init                 : 0
+instAsignacion       : 8
+instDefinicion       : 7
+instKMay             : 11
+instMay              : 10
+instPekenun          : 6
+instTuntentu         : 9
 instruccion          : 2 5
 instrucciones        : 1 2 15 16 17 17
-kmay_instr           : 11
-may_instr            : 10
-pekenun_instr        : 6
-tuntentu_instr       : 9
 
 Parsing method: LALR
 
@@ -104,20 +104,20 @@ state 0
     (1) init -> . instrucciones
     (2) instrucciones -> . instrucciones instruccion
     (5) instrucciones -> . instruccion
-    (6) instruccion -> . pekenun_instr
-    (7) instruccion -> . definicion_instr
-    (8) instruccion -> . asignacion_instr
-    (9) instruccion -> . tuntentu_instr
-    (10) instruccion -> . may_instr
-    (11) instruccion -> . kmay_instr
-    (12) pekenun_instr -> . PEKENUN PAREIZQ expresion_cadena PAREDER
-    (3) definicion_instr -> . RAKIN ID
-    (4) definicion_instr -> . NEMEL ID
-    (13) asignacion_instr -> . ID ASIGNACION expresion_numerica
-    (14) asignacion_instr -> . ID ASIGNACION expresion_cadena
-    (15) tuntentu_instr -> . TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (16) may_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (6) instruccion -> . instPekenun
+    (7) instruccion -> . instDefinicion
+    (8) instruccion -> . instAsignacion
+    (9) instruccion -> . instTuntentu
+    (10) instruccion -> . instMay
+    (11) instruccion -> . instKMay
+    (12) instPekenun -> . PEKENUN PARENTESISIZQ expString PARENTESISDER
+    (3) instDefinicion -> . RAKIN ID
+    (4) instDefinicion -> . NEMEL ID
+    (13) instAsignacion -> . ID ASIGNACION expNumero
+    (14) instAsignacion -> . ID ASIGNACION expString
+    (15) instTuntentu -> . TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (16) instMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
     PEKENUN         shift and go to state 10
     RAKIN           shift and go to state 11
@@ -129,12 +129,12 @@ state 0
     init                           shift and go to state 1
     instrucciones                  shift and go to state 2
     instruccion                    shift and go to state 3
-    pekenun_instr                  shift and go to state 4
-    definicion_instr               shift and go to state 5
-    asignacion_instr               shift and go to state 6
-    tuntentu_instr                 shift and go to state 7
-    may_instr                      shift and go to state 8
-    kmay_instr                     shift and go to state 9
+    instPekenun                    shift and go to state 4
+    instDefinicion                 shift and go to state 5
+    instAsignacion                 shift and go to state 6
+    instTuntentu                   shift and go to state 7
+    instMay                        shift and go to state 8
+    instKMay                       shift and go to state 9
 
 state 1
 
@@ -146,20 +146,20 @@ state 2
 
     (1) init -> instrucciones .
     (2) instrucciones -> instrucciones . instruccion
-    (6) instruccion -> . pekenun_instr
-    (7) instruccion -> . definicion_instr
-    (8) instruccion -> . asignacion_instr
-    (9) instruccion -> . tuntentu_instr
-    (10) instruccion -> . may_instr
-    (11) instruccion -> . kmay_instr
-    (12) pekenun_instr -> . PEKENUN PAREIZQ expresion_cadena PAREDER
-    (3) definicion_instr -> . RAKIN ID
-    (4) definicion_instr -> . NEMEL ID
-    (13) asignacion_instr -> . ID ASIGNACION expresion_numerica
-    (14) asignacion_instr -> . ID ASIGNACION expresion_cadena
-    (15) tuntentu_instr -> . TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (16) may_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (6) instruccion -> . instPekenun
+    (7) instruccion -> . instDefinicion
+    (8) instruccion -> . instAsignacion
+    (9) instruccion -> . instTuntentu
+    (10) instruccion -> . instMay
+    (11) instruccion -> . instKMay
+    (12) instPekenun -> . PEKENUN PARENTESISIZQ expString PARENTESISDER
+    (3) instDefinicion -> . RAKIN ID
+    (4) instDefinicion -> . NEMEL ID
+    (13) instAsignacion -> . ID ASIGNACION expNumero
+    (14) instAsignacion -> . ID ASIGNACION expString
+    (15) instTuntentu -> . TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (16) instMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
     $end            reduce using rule 1 (init -> instrucciones .)
     PEKENUN         shift and go to state 10
@@ -170,12 +170,12 @@ state 2
     MAY             shift and go to state 15
 
     instruccion                    shift and go to state 16
-    pekenun_instr                  shift and go to state 4
-    definicion_instr               shift and go to state 5
-    asignacion_instr               shift and go to state 6
-    tuntentu_instr                 shift and go to state 7
-    may_instr                      shift and go to state 8
-    kmay_instr                     shift and go to state 9
+    instPekenun                    shift and go to state 4
+    instDefinicion                 shift and go to state 5
+    instAsignacion                 shift and go to state 6
+    instTuntentu                   shift and go to state 7
+    instMay                        shift and go to state 8
+    instKMay                       shift and go to state 9
 
 state 3
 
@@ -193,130 +193,130 @@ state 3
 
 state 4
 
-    (6) instruccion -> pekenun_instr .
+    (6) instruccion -> instPekenun .
 
-    PEKENUN         reduce using rule 6 (instruccion -> pekenun_instr .)
-    RAKIN           reduce using rule 6 (instruccion -> pekenun_instr .)
-    NEMEL           reduce using rule 6 (instruccion -> pekenun_instr .)
-    ID              reduce using rule 6 (instruccion -> pekenun_instr .)
-    TUNTENTU        reduce using rule 6 (instruccion -> pekenun_instr .)
-    MAY             reduce using rule 6 (instruccion -> pekenun_instr .)
-    $end            reduce using rule 6 (instruccion -> pekenun_instr .)
-    KUYEN           reduce using rule 6 (instruccion -> pekenun_instr .)
+    PEKENUN         reduce using rule 6 (instruccion -> instPekenun .)
+    RAKIN           reduce using rule 6 (instruccion -> instPekenun .)
+    NEMEL           reduce using rule 6 (instruccion -> instPekenun .)
+    ID              reduce using rule 6 (instruccion -> instPekenun .)
+    TUNTENTU        reduce using rule 6 (instruccion -> instPekenun .)
+    MAY             reduce using rule 6 (instruccion -> instPekenun .)
+    $end            reduce using rule 6 (instruccion -> instPekenun .)
+    KUYEN           reduce using rule 6 (instruccion -> instPekenun .)
 
 
 state 5
 
-    (7) instruccion -> definicion_instr .
+    (7) instruccion -> instDefinicion .
 
-    PEKENUN         reduce using rule 7 (instruccion -> definicion_instr .)
-    RAKIN           reduce using rule 7 (instruccion -> definicion_instr .)
-    NEMEL           reduce using rule 7 (instruccion -> definicion_instr .)
-    ID              reduce using rule 7 (instruccion -> definicion_instr .)
-    TUNTENTU        reduce using rule 7 (instruccion -> definicion_instr .)
-    MAY             reduce using rule 7 (instruccion -> definicion_instr .)
-    $end            reduce using rule 7 (instruccion -> definicion_instr .)
-    KUYEN           reduce using rule 7 (instruccion -> definicion_instr .)
+    PEKENUN         reduce using rule 7 (instruccion -> instDefinicion .)
+    RAKIN           reduce using rule 7 (instruccion -> instDefinicion .)
+    NEMEL           reduce using rule 7 (instruccion -> instDefinicion .)
+    ID              reduce using rule 7 (instruccion -> instDefinicion .)
+    TUNTENTU        reduce using rule 7 (instruccion -> instDefinicion .)
+    MAY             reduce using rule 7 (instruccion -> instDefinicion .)
+    $end            reduce using rule 7 (instruccion -> instDefinicion .)
+    KUYEN           reduce using rule 7 (instruccion -> instDefinicion .)
 
 
 state 6
 
-    (8) instruccion -> asignacion_instr .
+    (8) instruccion -> instAsignacion .
 
-    PEKENUN         reduce using rule 8 (instruccion -> asignacion_instr .)
-    RAKIN           reduce using rule 8 (instruccion -> asignacion_instr .)
-    NEMEL           reduce using rule 8 (instruccion -> asignacion_instr .)
-    ID              reduce using rule 8 (instruccion -> asignacion_instr .)
-    TUNTENTU        reduce using rule 8 (instruccion -> asignacion_instr .)
-    MAY             reduce using rule 8 (instruccion -> asignacion_instr .)
-    $end            reduce using rule 8 (instruccion -> asignacion_instr .)
-    KUYEN           reduce using rule 8 (instruccion -> asignacion_instr .)
+    PEKENUN         reduce using rule 8 (instruccion -> instAsignacion .)
+    RAKIN           reduce using rule 8 (instruccion -> instAsignacion .)
+    NEMEL           reduce using rule 8 (instruccion -> instAsignacion .)
+    ID              reduce using rule 8 (instruccion -> instAsignacion .)
+    TUNTENTU        reduce using rule 8 (instruccion -> instAsignacion .)
+    MAY             reduce using rule 8 (instruccion -> instAsignacion .)
+    $end            reduce using rule 8 (instruccion -> instAsignacion .)
+    KUYEN           reduce using rule 8 (instruccion -> instAsignacion .)
 
 
 state 7
 
-    (9) instruccion -> tuntentu_instr .
+    (9) instruccion -> instTuntentu .
 
-    PEKENUN         reduce using rule 9 (instruccion -> tuntentu_instr .)
-    RAKIN           reduce using rule 9 (instruccion -> tuntentu_instr .)
-    NEMEL           reduce using rule 9 (instruccion -> tuntentu_instr .)
-    ID              reduce using rule 9 (instruccion -> tuntentu_instr .)
-    TUNTENTU        reduce using rule 9 (instruccion -> tuntentu_instr .)
-    MAY             reduce using rule 9 (instruccion -> tuntentu_instr .)
-    $end            reduce using rule 9 (instruccion -> tuntentu_instr .)
-    KUYEN           reduce using rule 9 (instruccion -> tuntentu_instr .)
+    PEKENUN         reduce using rule 9 (instruccion -> instTuntentu .)
+    RAKIN           reduce using rule 9 (instruccion -> instTuntentu .)
+    NEMEL           reduce using rule 9 (instruccion -> instTuntentu .)
+    ID              reduce using rule 9 (instruccion -> instTuntentu .)
+    TUNTENTU        reduce using rule 9 (instruccion -> instTuntentu .)
+    MAY             reduce using rule 9 (instruccion -> instTuntentu .)
+    $end            reduce using rule 9 (instruccion -> instTuntentu .)
+    KUYEN           reduce using rule 9 (instruccion -> instTuntentu .)
 
 
 state 8
 
-    (10) instruccion -> may_instr .
+    (10) instruccion -> instMay .
 
-    PEKENUN         reduce using rule 10 (instruccion -> may_instr .)
-    RAKIN           reduce using rule 10 (instruccion -> may_instr .)
-    NEMEL           reduce using rule 10 (instruccion -> may_instr .)
-    ID              reduce using rule 10 (instruccion -> may_instr .)
-    TUNTENTU        reduce using rule 10 (instruccion -> may_instr .)
-    MAY             reduce using rule 10 (instruccion -> may_instr .)
-    $end            reduce using rule 10 (instruccion -> may_instr .)
-    KUYEN           reduce using rule 10 (instruccion -> may_instr .)
+    PEKENUN         reduce using rule 10 (instruccion -> instMay .)
+    RAKIN           reduce using rule 10 (instruccion -> instMay .)
+    NEMEL           reduce using rule 10 (instruccion -> instMay .)
+    ID              reduce using rule 10 (instruccion -> instMay .)
+    TUNTENTU        reduce using rule 10 (instruccion -> instMay .)
+    MAY             reduce using rule 10 (instruccion -> instMay .)
+    $end            reduce using rule 10 (instruccion -> instMay .)
+    KUYEN           reduce using rule 10 (instruccion -> instMay .)
 
 
 state 9
 
-    (11) instruccion -> kmay_instr .
+    (11) instruccion -> instKMay .
 
-    PEKENUN         reduce using rule 11 (instruccion -> kmay_instr .)
-    RAKIN           reduce using rule 11 (instruccion -> kmay_instr .)
-    NEMEL           reduce using rule 11 (instruccion -> kmay_instr .)
-    ID              reduce using rule 11 (instruccion -> kmay_instr .)
-    TUNTENTU        reduce using rule 11 (instruccion -> kmay_instr .)
-    MAY             reduce using rule 11 (instruccion -> kmay_instr .)
-    $end            reduce using rule 11 (instruccion -> kmay_instr .)
-    KUYEN           reduce using rule 11 (instruccion -> kmay_instr .)
+    PEKENUN         reduce using rule 11 (instruccion -> instKMay .)
+    RAKIN           reduce using rule 11 (instruccion -> instKMay .)
+    NEMEL           reduce using rule 11 (instruccion -> instKMay .)
+    ID              reduce using rule 11 (instruccion -> instKMay .)
+    TUNTENTU        reduce using rule 11 (instruccion -> instKMay .)
+    MAY             reduce using rule 11 (instruccion -> instKMay .)
+    $end            reduce using rule 11 (instruccion -> instKMay .)
+    KUYEN           reduce using rule 11 (instruccion -> instKMay .)
 
 
 state 10
 
-    (12) pekenun_instr -> PEKENUN . PAREIZQ expresion_cadena PAREDER
+    (12) instPekenun -> PEKENUN . PARENTESISIZQ expString PARENTESISDER
 
-    PAREIZQ         shift and go to state 17
+    PARENTESISIZQ   shift and go to state 17
 
 
 state 11
 
-    (3) definicion_instr -> RAKIN . ID
+    (3) instDefinicion -> RAKIN . ID
 
     ID              shift and go to state 18
 
 
 state 12
 
-    (13) asignacion_instr -> ID . ASIGNACION expresion_numerica
-    (14) asignacion_instr -> ID . ASIGNACION expresion_cadena
+    (13) instAsignacion -> ID . ASIGNACION expNumero
+    (14) instAsignacion -> ID . ASIGNACION expString
 
     ASIGNACION      shift and go to state 19
 
 
 state 13
 
-    (4) definicion_instr -> NEMEL . ID
+    (4) instDefinicion -> NEMEL . ID
 
     ID              shift and go to state 20
 
 
 state 14
 
-    (15) tuntentu_instr -> TUNTENTU . PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
+    (15) instTuntentu -> TUNTENTU . PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
 
-    PAREIZQ         shift and go to state 21
+    PARENTESISIZQ   shift and go to state 21
 
 
 state 15
 
-    (16) may_instr -> MAY . PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> MAY . PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (16) instMay -> MAY . PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> MAY . PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
-    PAREIZQ         shift and go to state 22
+    PARENTESISIZQ   shift and go to state 22
 
 
 state 16
@@ -335,192 +335,192 @@ state 16
 
 state 17
 
-    (12) pekenun_instr -> PEKENUN PAREIZQ . expresion_cadena PAREDER
-    (26) expresion_cadena -> . CADENA_TEXTO
-    (27) expresion_cadena -> . expresion_numerica
-    (28) expresion_cadena -> . expresion_cadena CONCAT expresion_cadena
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (12) instPekenun -> PEKENUN PARENTESISIZQ . expString PARENTESISDER
+    (26) expString -> . CADENA_TEXTO
+    (27) expString -> . expNumero
+    (28) expString -> . expString CONCAT expString
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
     CADENA_TEXTO    shift and go to state 25
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_cadena               shift and go to state 24
-    expresion_numerica             shift and go to state 26
+    expString                      shift and go to state 24
+    expNumero                      shift and go to state 26
 
 state 18
 
-    (3) definicion_instr -> RAKIN ID .
+    (3) instDefinicion -> RAKIN ID .
 
-    PEKENUN         reduce using rule 3 (definicion_instr -> RAKIN ID .)
-    RAKIN           reduce using rule 3 (definicion_instr -> RAKIN ID .)
-    NEMEL           reduce using rule 3 (definicion_instr -> RAKIN ID .)
-    ID              reduce using rule 3 (definicion_instr -> RAKIN ID .)
-    TUNTENTU        reduce using rule 3 (definicion_instr -> RAKIN ID .)
-    MAY             reduce using rule 3 (definicion_instr -> RAKIN ID .)
-    $end            reduce using rule 3 (definicion_instr -> RAKIN ID .)
-    KUYEN           reduce using rule 3 (definicion_instr -> RAKIN ID .)
+    PEKENUN         reduce using rule 3 (instDefinicion -> RAKIN ID .)
+    RAKIN           reduce using rule 3 (instDefinicion -> RAKIN ID .)
+    NEMEL           reduce using rule 3 (instDefinicion -> RAKIN ID .)
+    ID              reduce using rule 3 (instDefinicion -> RAKIN ID .)
+    TUNTENTU        reduce using rule 3 (instDefinicion -> RAKIN ID .)
+    MAY             reduce using rule 3 (instDefinicion -> RAKIN ID .)
+    $end            reduce using rule 3 (instDefinicion -> RAKIN ID .)
+    KUYEN           reduce using rule 3 (instDefinicion -> RAKIN ID .)
 
 
 state 19
 
-    (13) asignacion_instr -> ID ASIGNACION . expresion_numerica
-    (14) asignacion_instr -> ID ASIGNACION . expresion_cadena
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
-    (26) expresion_cadena -> . CADENA_TEXTO
-    (27) expresion_cadena -> . expresion_numerica
-    (28) expresion_cadena -> . expresion_cadena CONCAT expresion_cadena
+    (13) instAsignacion -> ID ASIGNACION . expNumero
+    (14) instAsignacion -> ID ASIGNACION . expString
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
+    (26) expString -> . CADENA_TEXTO
+    (27) expString -> . expNumero
+    (28) expString -> . expString CONCAT expString
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
     CADENA_TEXTO    shift and go to state 25
 
-    expresion_numerica             shift and go to state 30
-    expresion_cadena               shift and go to state 31
+    expNumero                      shift and go to state 30
+    expString                      shift and go to state 31
 
 state 20
 
-    (4) definicion_instr -> NEMEL ID .
+    (4) instDefinicion -> NEMEL ID .
 
-    PEKENUN         reduce using rule 4 (definicion_instr -> NEMEL ID .)
-    RAKIN           reduce using rule 4 (definicion_instr -> NEMEL ID .)
-    NEMEL           reduce using rule 4 (definicion_instr -> NEMEL ID .)
-    ID              reduce using rule 4 (definicion_instr -> NEMEL ID .)
-    TUNTENTU        reduce using rule 4 (definicion_instr -> NEMEL ID .)
-    MAY             reduce using rule 4 (definicion_instr -> NEMEL ID .)
-    $end            reduce using rule 4 (definicion_instr -> NEMEL ID .)
-    KUYEN           reduce using rule 4 (definicion_instr -> NEMEL ID .)
+    PEKENUN         reduce using rule 4 (instDefinicion -> NEMEL ID .)
+    RAKIN           reduce using rule 4 (instDefinicion -> NEMEL ID .)
+    NEMEL           reduce using rule 4 (instDefinicion -> NEMEL ID .)
+    ID              reduce using rule 4 (instDefinicion -> NEMEL ID .)
+    TUNTENTU        reduce using rule 4 (instDefinicion -> NEMEL ID .)
+    MAY             reduce using rule 4 (instDefinicion -> NEMEL ID .)
+    $end            reduce using rule 4 (instDefinicion -> NEMEL ID .)
+    KUYEN           reduce using rule 4 (instDefinicion -> NEMEL ID .)
 
 
 state 21
 
-    (15) tuntentu_instr -> TUNTENTU PAREIZQ . expresion_logica PAREDER ANTU instrucciones KUYEN
-    (29) expresion_logica -> . expresion_numerica MAYOR expresion_numerica
-    (30) expresion_logica -> . expresion_numerica MENOR expresion_numerica
-    (31) expresion_logica -> . expresion_numerica IGUALQUE expresion_numerica
-    (32) expresion_logica -> . expresion_numerica DISTINTO expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (15) instTuntentu -> TUNTENTU PARENTESISIZQ . eL PARENTESISDER ANTU instrucciones KUYEN
+    (29) eL -> . expNumero MAYOR expNumero
+    (30) eL -> . expNumero MENOR expNumero
+    (31) eL -> . expNumero IGUALQUE expNumero
+    (32) eL -> . expNumero DISTINTO expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_logica               shift and go to state 32
-    expresion_numerica             shift and go to state 33
+    eL                             shift and go to state 32
+    expNumero                      shift and go to state 33
 
 state 22
 
-    (16) may_instr -> MAY PAREIZQ . expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> MAY PAREIZQ . expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
-    (29) expresion_logica -> . expresion_numerica MAYOR expresion_numerica
-    (30) expresion_logica -> . expresion_numerica MENOR expresion_numerica
-    (31) expresion_logica -> . expresion_numerica IGUALQUE expresion_numerica
-    (32) expresion_logica -> . expresion_numerica DISTINTO expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (16) instMay -> MAY PARENTESISIZQ . eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> MAY PARENTESISIZQ . eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (29) eL -> . expNumero MAYOR expNumero
+    (30) eL -> . expNumero MENOR expNumero
+    (31) eL -> . expNumero IGUALQUE expNumero
+    (32) eL -> . expNumero DISTINTO expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_logica               shift and go to state 34
-    expresion_numerica             shift and go to state 33
+    eL                             shift and go to state 34
+    expNumero                      shift and go to state 33
 
 state 23
 
-    (22) expresion_numerica -> PAREIZQ . expresion_numerica PAREDER
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (22) expNumero -> PARENTESISIZQ . expNumero PARENTESISDER
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_numerica             shift and go to state 35
+    expNumero                      shift and go to state 35
 
 state 24
 
-    (12) pekenun_instr -> PEKENUN PAREIZQ expresion_cadena . PAREDER
-    (28) expresion_cadena -> expresion_cadena . CONCAT expresion_cadena
+    (12) instPekenun -> PEKENUN PARENTESISIZQ expString . PARENTESISDER
+    (28) expString -> expString . CONCAT expString
 
-    PAREDER         shift and go to state 36
+    PARENTESISDER   shift and go to state 36
     CONCAT          shift and go to state 37
 
 
 state 25
 
-    (26) expresion_cadena -> CADENA_TEXTO .
+    (26) expString -> CADENA_TEXTO .
 
-    PAREDER         reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
-    CONCAT          reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
-    PEKENUN         reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
-    RAKIN           reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
-    NEMEL           reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
-    ID              reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
-    TUNTENTU        reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
-    MAY             reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
-    $end            reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
-    KUYEN           reduce using rule 26 (expresion_cadena -> CADENA_TEXTO .)
+    PARENTESISDER   reduce using rule 26 (expString -> CADENA_TEXTO .)
+    CONCAT          reduce using rule 26 (expString -> CADENA_TEXTO .)
+    PEKENUN         reduce using rule 26 (expString -> CADENA_TEXTO .)
+    RAKIN           reduce using rule 26 (expString -> CADENA_TEXTO .)
+    NEMEL           reduce using rule 26 (expString -> CADENA_TEXTO .)
+    ID              reduce using rule 26 (expString -> CADENA_TEXTO .)
+    TUNTENTU        reduce using rule 26 (expString -> CADENA_TEXTO .)
+    MAY             reduce using rule 26 (expString -> CADENA_TEXTO .)
+    $end            reduce using rule 26 (expString -> CADENA_TEXTO .)
+    KUYEN           reduce using rule 26 (expString -> CADENA_TEXTO .)
 
 
 state 26
 
-    (27) expresion_cadena -> expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (27) expString -> expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    PAREDER         reduce using rule 27 (expresion_cadena -> expresion_numerica .)
-    CONCAT          reduce using rule 27 (expresion_cadena -> expresion_numerica .)
-    PEKENUN         reduce using rule 27 (expresion_cadena -> expresion_numerica .)
-    RAKIN           reduce using rule 27 (expresion_cadena -> expresion_numerica .)
-    NEMEL           reduce using rule 27 (expresion_cadena -> expresion_numerica .)
-    ID              reduce using rule 27 (expresion_cadena -> expresion_numerica .)
-    TUNTENTU        reduce using rule 27 (expresion_cadena -> expresion_numerica .)
-    MAY             reduce using rule 27 (expresion_cadena -> expresion_numerica .)
-    $end            reduce using rule 27 (expresion_cadena -> expresion_numerica .)
-    KUYEN           reduce using rule 27 (expresion_cadena -> expresion_numerica .)
+    PARENTESISDER   reduce using rule 27 (expString -> expNumero .)
+    CONCAT          reduce using rule 27 (expString -> expNumero .)
+    PEKENUN         reduce using rule 27 (expString -> expNumero .)
+    RAKIN           reduce using rule 27 (expString -> expNumero .)
+    NEMEL           reduce using rule 27 (expString -> expNumero .)
+    ID              reduce using rule 27 (expString -> expNumero .)
+    TUNTENTU        reduce using rule 27 (expString -> expNumero .)
+    MAY             reduce using rule 27 (expString -> expNumero .)
+    $end            reduce using rule 27 (expString -> expNumero .)
+    KUYEN           reduce using rule 27 (expString -> expNumero .)
     MAS             shift and go to state 38
     MENOS           shift and go to state 39
     POR             shift and go to state 40
@@ -529,150 +529,150 @@ state 26
 
 state 27
 
-    (23) expresion_numerica -> INT .
+    (23) expNumero -> INT .
 
-    MAS             reduce using rule 23 (expresion_numerica -> INT .)
-    MENOS           reduce using rule 23 (expresion_numerica -> INT .)
-    POR             reduce using rule 23 (expresion_numerica -> INT .)
-    DIVIDIDO        reduce using rule 23 (expresion_numerica -> INT .)
-    PAREDER         reduce using rule 23 (expresion_numerica -> INT .)
-    CONCAT          reduce using rule 23 (expresion_numerica -> INT .)
-    PEKENUN         reduce using rule 23 (expresion_numerica -> INT .)
-    RAKIN           reduce using rule 23 (expresion_numerica -> INT .)
-    NEMEL           reduce using rule 23 (expresion_numerica -> INT .)
-    ID              reduce using rule 23 (expresion_numerica -> INT .)
-    TUNTENTU        reduce using rule 23 (expresion_numerica -> INT .)
-    MAY             reduce using rule 23 (expresion_numerica -> INT .)
-    $end            reduce using rule 23 (expresion_numerica -> INT .)
-    KUYEN           reduce using rule 23 (expresion_numerica -> INT .)
-    MAYOR           reduce using rule 23 (expresion_numerica -> INT .)
-    MENOR           reduce using rule 23 (expresion_numerica -> INT .)
-    IGUALQUE        reduce using rule 23 (expresion_numerica -> INT .)
-    DISTINTO        reduce using rule 23 (expresion_numerica -> INT .)
+    MAS             reduce using rule 23 (expNumero -> INT .)
+    MENOS           reduce using rule 23 (expNumero -> INT .)
+    POR             reduce using rule 23 (expNumero -> INT .)
+    DIVIDIDO        reduce using rule 23 (expNumero -> INT .)
+    PARENTESISDER   reduce using rule 23 (expNumero -> INT .)
+    CONCAT          reduce using rule 23 (expNumero -> INT .)
+    PEKENUN         reduce using rule 23 (expNumero -> INT .)
+    RAKIN           reduce using rule 23 (expNumero -> INT .)
+    NEMEL           reduce using rule 23 (expNumero -> INT .)
+    ID              reduce using rule 23 (expNumero -> INT .)
+    TUNTENTU        reduce using rule 23 (expNumero -> INT .)
+    MAY             reduce using rule 23 (expNumero -> INT .)
+    $end            reduce using rule 23 (expNumero -> INT .)
+    KUYEN           reduce using rule 23 (expNumero -> INT .)
+    MAYOR           reduce using rule 23 (expNumero -> INT .)
+    MENOR           reduce using rule 23 (expNumero -> INT .)
+    IGUALQUE        reduce using rule 23 (expNumero -> INT .)
+    DISTINTO        reduce using rule 23 (expNumero -> INT .)
 
 
 state 28
 
-    (24) expresion_numerica -> FLOTANTE .
+    (24) expNumero -> FLOTANTE .
 
-    MAS             reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    MENOS           reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    POR             reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    DIVIDIDO        reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    PAREDER         reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    CONCAT          reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    PEKENUN         reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    RAKIN           reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    NEMEL           reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    ID              reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    TUNTENTU        reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    MAY             reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    $end            reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    KUYEN           reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    MAYOR           reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    MENOR           reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    IGUALQUE        reduce using rule 24 (expresion_numerica -> FLOTANTE .)
-    DISTINTO        reduce using rule 24 (expresion_numerica -> FLOTANTE .)
+    MAS             reduce using rule 24 (expNumero -> FLOTANTE .)
+    MENOS           reduce using rule 24 (expNumero -> FLOTANTE .)
+    POR             reduce using rule 24 (expNumero -> FLOTANTE .)
+    DIVIDIDO        reduce using rule 24 (expNumero -> FLOTANTE .)
+    PARENTESISDER   reduce using rule 24 (expNumero -> FLOTANTE .)
+    CONCAT          reduce using rule 24 (expNumero -> FLOTANTE .)
+    PEKENUN         reduce using rule 24 (expNumero -> FLOTANTE .)
+    RAKIN           reduce using rule 24 (expNumero -> FLOTANTE .)
+    NEMEL           reduce using rule 24 (expNumero -> FLOTANTE .)
+    ID              reduce using rule 24 (expNumero -> FLOTANTE .)
+    TUNTENTU        reduce using rule 24 (expNumero -> FLOTANTE .)
+    MAY             reduce using rule 24 (expNumero -> FLOTANTE .)
+    $end            reduce using rule 24 (expNumero -> FLOTANTE .)
+    KUYEN           reduce using rule 24 (expNumero -> FLOTANTE .)
+    MAYOR           reduce using rule 24 (expNumero -> FLOTANTE .)
+    MENOR           reduce using rule 24 (expNumero -> FLOTANTE .)
+    IGUALQUE        reduce using rule 24 (expNumero -> FLOTANTE .)
+    DISTINTO        reduce using rule 24 (expNumero -> FLOTANTE .)
 
 
 state 29
 
-    (25) expresion_numerica -> ID .
+    (25) expNumero -> ID .
 
-    MAS             reduce using rule 25 (expresion_numerica -> ID .)
-    MENOS           reduce using rule 25 (expresion_numerica -> ID .)
-    POR             reduce using rule 25 (expresion_numerica -> ID .)
-    DIVIDIDO        reduce using rule 25 (expresion_numerica -> ID .)
-    PAREDER         reduce using rule 25 (expresion_numerica -> ID .)
-    CONCAT          reduce using rule 25 (expresion_numerica -> ID .)
-    PEKENUN         reduce using rule 25 (expresion_numerica -> ID .)
-    RAKIN           reduce using rule 25 (expresion_numerica -> ID .)
-    NEMEL           reduce using rule 25 (expresion_numerica -> ID .)
-    ID              reduce using rule 25 (expresion_numerica -> ID .)
-    TUNTENTU        reduce using rule 25 (expresion_numerica -> ID .)
-    MAY             reduce using rule 25 (expresion_numerica -> ID .)
-    $end            reduce using rule 25 (expresion_numerica -> ID .)
-    KUYEN           reduce using rule 25 (expresion_numerica -> ID .)
-    MAYOR           reduce using rule 25 (expresion_numerica -> ID .)
-    MENOR           reduce using rule 25 (expresion_numerica -> ID .)
-    IGUALQUE        reduce using rule 25 (expresion_numerica -> ID .)
-    DISTINTO        reduce using rule 25 (expresion_numerica -> ID .)
+    MAS             reduce using rule 25 (expNumero -> ID .)
+    MENOS           reduce using rule 25 (expNumero -> ID .)
+    POR             reduce using rule 25 (expNumero -> ID .)
+    DIVIDIDO        reduce using rule 25 (expNumero -> ID .)
+    PARENTESISDER   reduce using rule 25 (expNumero -> ID .)
+    CONCAT          reduce using rule 25 (expNumero -> ID .)
+    PEKENUN         reduce using rule 25 (expNumero -> ID .)
+    RAKIN           reduce using rule 25 (expNumero -> ID .)
+    NEMEL           reduce using rule 25 (expNumero -> ID .)
+    ID              reduce using rule 25 (expNumero -> ID .)
+    TUNTENTU        reduce using rule 25 (expNumero -> ID .)
+    MAY             reduce using rule 25 (expNumero -> ID .)
+    $end            reduce using rule 25 (expNumero -> ID .)
+    KUYEN           reduce using rule 25 (expNumero -> ID .)
+    MAYOR           reduce using rule 25 (expNumero -> ID .)
+    MENOR           reduce using rule 25 (expNumero -> ID .)
+    IGUALQUE        reduce using rule 25 (expNumero -> ID .)
+    DISTINTO        reduce using rule 25 (expNumero -> ID .)
 
 
 state 30
 
-    (13) asignacion_instr -> ID ASIGNACION expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
-    (27) expresion_cadena -> expresion_numerica .
+    (13) instAsignacion -> ID ASIGNACION expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
+    (27) expString -> expNumero .
 
-  ! reduce/reduce conflict for PEKENUN resolved using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-  ! reduce/reduce conflict for RAKIN resolved using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-  ! reduce/reduce conflict for NEMEL resolved using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-  ! reduce/reduce conflict for ID resolved using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-  ! reduce/reduce conflict for TUNTENTU resolved using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-  ! reduce/reduce conflict for MAY resolved using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-  ! reduce/reduce conflict for $end resolved using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-  ! reduce/reduce conflict for KUYEN resolved using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-    PEKENUN         reduce using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-    RAKIN           reduce using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-    NEMEL           reduce using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-    ID              reduce using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-    TUNTENTU        reduce using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-    MAY             reduce using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-    $end            reduce using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
-    KUYEN           reduce using rule 13 (asignacion_instr -> ID ASIGNACION expresion_numerica .)
+  ! reduce/reduce conflict for PEKENUN resolved using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+  ! reduce/reduce conflict for RAKIN resolved using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+  ! reduce/reduce conflict for NEMEL resolved using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+  ! reduce/reduce conflict for ID resolved using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+  ! reduce/reduce conflict for TUNTENTU resolved using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+  ! reduce/reduce conflict for MAY resolved using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+  ! reduce/reduce conflict for $end resolved using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+  ! reduce/reduce conflict for KUYEN resolved using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+    PEKENUN         reduce using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+    RAKIN           reduce using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+    NEMEL           reduce using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+    ID              reduce using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+    TUNTENTU        reduce using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+    MAY             reduce using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+    $end            reduce using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
+    KUYEN           reduce using rule 13 (instAsignacion -> ID ASIGNACION expNumero .)
     MAS             shift and go to state 38
     MENOS           shift and go to state 39
     POR             shift and go to state 40
     DIVIDIDO        shift and go to state 41
-    CONCAT          reduce using rule 27 (expresion_cadena -> expresion_numerica .)
+    CONCAT          reduce using rule 27 (expString -> expNumero .)
 
-  ! PEKENUN         [ reduce using rule 27 (expresion_cadena -> expresion_numerica .) ]
-  ! RAKIN           [ reduce using rule 27 (expresion_cadena -> expresion_numerica .) ]
-  ! NEMEL           [ reduce using rule 27 (expresion_cadena -> expresion_numerica .) ]
-  ! ID              [ reduce using rule 27 (expresion_cadena -> expresion_numerica .) ]
-  ! TUNTENTU        [ reduce using rule 27 (expresion_cadena -> expresion_numerica .) ]
-  ! MAY             [ reduce using rule 27 (expresion_cadena -> expresion_numerica .) ]
-  ! $end            [ reduce using rule 27 (expresion_cadena -> expresion_numerica .) ]
-  ! KUYEN           [ reduce using rule 27 (expresion_cadena -> expresion_numerica .) ]
+  ! PEKENUN         [ reduce using rule 27 (expString -> expNumero .) ]
+  ! RAKIN           [ reduce using rule 27 (expString -> expNumero .) ]
+  ! NEMEL           [ reduce using rule 27 (expString -> expNumero .) ]
+  ! ID              [ reduce using rule 27 (expString -> expNumero .) ]
+  ! TUNTENTU        [ reduce using rule 27 (expString -> expNumero .) ]
+  ! MAY             [ reduce using rule 27 (expString -> expNumero .) ]
+  ! $end            [ reduce using rule 27 (expString -> expNumero .) ]
+  ! KUYEN           [ reduce using rule 27 (expString -> expNumero .) ]
 
 
 state 31
 
-    (14) asignacion_instr -> ID ASIGNACION expresion_cadena .
-    (28) expresion_cadena -> expresion_cadena . CONCAT expresion_cadena
+    (14) instAsignacion -> ID ASIGNACION expString .
+    (28) expString -> expString . CONCAT expString
 
-    PEKENUN         reduce using rule 14 (asignacion_instr -> ID ASIGNACION expresion_cadena .)
-    RAKIN           reduce using rule 14 (asignacion_instr -> ID ASIGNACION expresion_cadena .)
-    NEMEL           reduce using rule 14 (asignacion_instr -> ID ASIGNACION expresion_cadena .)
-    ID              reduce using rule 14 (asignacion_instr -> ID ASIGNACION expresion_cadena .)
-    TUNTENTU        reduce using rule 14 (asignacion_instr -> ID ASIGNACION expresion_cadena .)
-    MAY             reduce using rule 14 (asignacion_instr -> ID ASIGNACION expresion_cadena .)
-    $end            reduce using rule 14 (asignacion_instr -> ID ASIGNACION expresion_cadena .)
-    KUYEN           reduce using rule 14 (asignacion_instr -> ID ASIGNACION expresion_cadena .)
+    PEKENUN         reduce using rule 14 (instAsignacion -> ID ASIGNACION expString .)
+    RAKIN           reduce using rule 14 (instAsignacion -> ID ASIGNACION expString .)
+    NEMEL           reduce using rule 14 (instAsignacion -> ID ASIGNACION expString .)
+    ID              reduce using rule 14 (instAsignacion -> ID ASIGNACION expString .)
+    TUNTENTU        reduce using rule 14 (instAsignacion -> ID ASIGNACION expString .)
+    MAY             reduce using rule 14 (instAsignacion -> ID ASIGNACION expString .)
+    $end            reduce using rule 14 (instAsignacion -> ID ASIGNACION expString .)
+    KUYEN           reduce using rule 14 (instAsignacion -> ID ASIGNACION expString .)
     CONCAT          shift and go to state 37
 
 
 state 32
 
-    (15) tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica . PAREDER ANTU instrucciones KUYEN
+    (15) instTuntentu -> TUNTENTU PARENTESISIZQ eL . PARENTESISDER ANTU instrucciones KUYEN
 
-    PAREDER         shift and go to state 42
+    PARENTESISDER   shift and go to state 42
 
 
 state 33
 
-    (29) expresion_logica -> expresion_numerica . MAYOR expresion_numerica
-    (30) expresion_logica -> expresion_numerica . MENOR expresion_numerica
-    (31) expresion_logica -> expresion_numerica . IGUALQUE expresion_numerica
-    (32) expresion_logica -> expresion_numerica . DISTINTO expresion_numerica
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (29) eL -> expNumero . MAYOR expNumero
+    (30) eL -> expNumero . MENOR expNumero
+    (31) eL -> expNumero . IGUALQUE expNumero
+    (32) eL -> expNumero . DISTINTO expNumero
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
     MAYOR           shift and go to state 43
     MENOR           shift and go to state 44
@@ -686,21 +686,21 @@ state 33
 
 state 34
 
-    (16) may_instr -> MAY PAREIZQ expresion_logica . PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> MAY PAREIZQ expresion_logica . PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (16) instMay -> MAY PARENTESISIZQ eL . PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> MAY PARENTESISIZQ eL . PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
-    PAREDER         shift and go to state 47
+    PARENTESISDER   shift and go to state 47
 
 
 state 35
 
-    (22) expresion_numerica -> PAREIZQ expresion_numerica . PAREDER
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (22) expNumero -> PARENTESISIZQ expNumero . PARENTESISDER
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    PAREDER         shift and go to state 48
+    PARENTESISDER   shift and go to state 48
     MAS             shift and go to state 38
     MENOS           shift and go to state 39
     POR             shift and go to state 40
@@ -709,345 +709,345 @@ state 35
 
 state 36
 
-    (12) pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER .
+    (12) instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER .
 
-    PEKENUN         reduce using rule 12 (pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER .)
-    RAKIN           reduce using rule 12 (pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER .)
-    NEMEL           reduce using rule 12 (pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER .)
-    ID              reduce using rule 12 (pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER .)
-    TUNTENTU        reduce using rule 12 (pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER .)
-    MAY             reduce using rule 12 (pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER .)
-    $end            reduce using rule 12 (pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER .)
-    KUYEN           reduce using rule 12 (pekenun_instr -> PEKENUN PAREIZQ expresion_cadena PAREDER .)
+    PEKENUN         reduce using rule 12 (instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER .)
+    RAKIN           reduce using rule 12 (instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER .)
+    NEMEL           reduce using rule 12 (instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER .)
+    ID              reduce using rule 12 (instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER .)
+    TUNTENTU        reduce using rule 12 (instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER .)
+    MAY             reduce using rule 12 (instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER .)
+    $end            reduce using rule 12 (instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER .)
+    KUYEN           reduce using rule 12 (instPekenun -> PEKENUN PARENTESISIZQ expString PARENTESISDER .)
 
 
 state 37
 
-    (28) expresion_cadena -> expresion_cadena CONCAT . expresion_cadena
-    (26) expresion_cadena -> . CADENA_TEXTO
-    (27) expresion_cadena -> . expresion_numerica
-    (28) expresion_cadena -> . expresion_cadena CONCAT expresion_cadena
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (28) expString -> expString CONCAT . expString
+    (26) expString -> . CADENA_TEXTO
+    (27) expString -> . expNumero
+    (28) expString -> . expString CONCAT expString
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
     CADENA_TEXTO    shift and go to state 25
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_cadena               shift and go to state 49
-    expresion_numerica             shift and go to state 26
+    expString                      shift and go to state 49
+    expNumero                      shift and go to state 26
 
 state 38
 
-    (18) expresion_numerica -> expresion_numerica MAS . expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (18) expNumero -> expNumero MAS . expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_numerica             shift and go to state 50
+    expNumero                      shift and go to state 50
 
 state 39
 
-    (19) expresion_numerica -> expresion_numerica MENOS . expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (19) expNumero -> expNumero MENOS . expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_numerica             shift and go to state 51
+    expNumero                      shift and go to state 51
 
 state 40
 
-    (20) expresion_numerica -> expresion_numerica POR . expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (20) expNumero -> expNumero POR . expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_numerica             shift and go to state 52
+    expNumero                      shift and go to state 52
 
 state 41
 
-    (21) expresion_numerica -> expresion_numerica DIVIDIDO . expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (21) expNumero -> expNumero DIVIDIDO . expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_numerica             shift and go to state 53
+    expNumero                      shift and go to state 53
 
 state 42
 
-    (15) tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER . ANTU instrucciones KUYEN
+    (15) instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER . ANTU instrucciones KUYEN
 
     ANTU            shift and go to state 54
 
 
 state 43
 
-    (29) expresion_logica -> expresion_numerica MAYOR . expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (29) eL -> expNumero MAYOR . expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_numerica             shift and go to state 55
+    expNumero                      shift and go to state 55
 
 state 44
 
-    (30) expresion_logica -> expresion_numerica MENOR . expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (30) eL -> expNumero MENOR . expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_numerica             shift and go to state 56
+    expNumero                      shift and go to state 56
 
 state 45
 
-    (31) expresion_logica -> expresion_numerica IGUALQUE . expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (31) eL -> expNumero IGUALQUE . expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_numerica             shift and go to state 57
+    expNumero                      shift and go to state 57
 
 state 46
 
-    (32) expresion_logica -> expresion_numerica DISTINTO . expresion_numerica
-    (18) expresion_numerica -> . expresion_numerica MAS expresion_numerica
-    (19) expresion_numerica -> . expresion_numerica MENOS expresion_numerica
-    (20) expresion_numerica -> . expresion_numerica POR expresion_numerica
-    (21) expresion_numerica -> . expresion_numerica DIVIDIDO expresion_numerica
-    (22) expresion_numerica -> . PAREIZQ expresion_numerica PAREDER
-    (23) expresion_numerica -> . INT
-    (24) expresion_numerica -> . FLOTANTE
-    (25) expresion_numerica -> . ID
+    (32) eL -> expNumero DISTINTO . expNumero
+    (18) expNumero -> . expNumero MAS expNumero
+    (19) expNumero -> . expNumero MENOS expNumero
+    (20) expNumero -> . expNumero POR expNumero
+    (21) expNumero -> . expNumero DIVIDIDO expNumero
+    (22) expNumero -> . PARENTESISIZQ expNumero PARENTESISDER
+    (23) expNumero -> . INT
+    (24) expNumero -> . FLOTANTE
+    (25) expNumero -> . ID
 
-    PAREIZQ         shift and go to state 23
+    PARENTESISIZQ   shift and go to state 23
     INT             shift and go to state 27
     FLOTANTE        shift and go to state 28
     ID              shift and go to state 29
 
-    expresion_numerica             shift and go to state 58
+    expNumero                      shift and go to state 58
 
 state 47
 
-    (16) may_instr -> MAY PAREIZQ expresion_logica PAREDER . ANTU instrucciones KUYEN
-    (17) kmay_instr -> MAY PAREIZQ expresion_logica PAREDER . ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (16) instMay -> MAY PARENTESISIZQ eL PARENTESISDER . ANTU instrucciones KUYEN
+    (17) instKMay -> MAY PARENTESISIZQ eL PARENTESISDER . ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
     ANTU            shift and go to state 59
 
 
 state 48
 
-    (22) expresion_numerica -> PAREIZQ expresion_numerica PAREDER .
+    (22) expNumero -> PARENTESISIZQ expNumero PARENTESISDER .
 
-    MAS             reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    MENOS           reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    POR             reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    DIVIDIDO        reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    PAREDER         reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    CONCAT          reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    PEKENUN         reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    RAKIN           reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    NEMEL           reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    ID              reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    TUNTENTU        reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    MAY             reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    $end            reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    KUYEN           reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    MAYOR           reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    MENOR           reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    IGUALQUE        reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
-    DISTINTO        reduce using rule 22 (expresion_numerica -> PAREIZQ expresion_numerica PAREDER .)
+    MAS             reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    MENOS           reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    POR             reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    DIVIDIDO        reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    PARENTESISDER   reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    CONCAT          reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    PEKENUN         reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    RAKIN           reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    NEMEL           reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    ID              reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    TUNTENTU        reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    MAY             reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    $end            reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    KUYEN           reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    MAYOR           reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    MENOR           reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    IGUALQUE        reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
+    DISTINTO        reduce using rule 22 (expNumero -> PARENTESISIZQ expNumero PARENTESISDER .)
 
 
 state 49
 
-    (28) expresion_cadena -> expresion_cadena CONCAT expresion_cadena .
-    (28) expresion_cadena -> expresion_cadena . CONCAT expresion_cadena
+    (28) expString -> expString CONCAT expString .
+    (28) expString -> expString . CONCAT expString
 
   ! shift/reduce conflict for CONCAT resolved as shift
-    PAREDER         reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .)
-    PEKENUN         reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .)
-    RAKIN           reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .)
-    NEMEL           reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .)
-    ID              reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .)
-    TUNTENTU        reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .)
-    MAY             reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .)
-    $end            reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .)
-    KUYEN           reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .)
+    PARENTESISDER   reduce using rule 28 (expString -> expString CONCAT expString .)
+    PEKENUN         reduce using rule 28 (expString -> expString CONCAT expString .)
+    RAKIN           reduce using rule 28 (expString -> expString CONCAT expString .)
+    NEMEL           reduce using rule 28 (expString -> expString CONCAT expString .)
+    ID              reduce using rule 28 (expString -> expString CONCAT expString .)
+    TUNTENTU        reduce using rule 28 (expString -> expString CONCAT expString .)
+    MAY             reduce using rule 28 (expString -> expString CONCAT expString .)
+    $end            reduce using rule 28 (expString -> expString CONCAT expString .)
+    KUYEN           reduce using rule 28 (expString -> expString CONCAT expString .)
     CONCAT          shift and go to state 37
 
-  ! CONCAT          [ reduce using rule 28 (expresion_cadena -> expresion_cadena CONCAT expresion_cadena .) ]
+  ! CONCAT          [ reduce using rule 28 (expString -> expString CONCAT expString .) ]
 
 
 state 50
 
-    (18) expresion_numerica -> expresion_numerica MAS expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (18) expNumero -> expNumero MAS expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    MAS             reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    MENOS           reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    PAREDER         reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    CONCAT          reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    PEKENUN         reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    RAKIN           reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    NEMEL           reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    ID              reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    TUNTENTU        reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    MAY             reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    $end            reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    KUYEN           reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    MAYOR           reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    MENOR           reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    IGUALQUE        reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
-    DISTINTO        reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .)
+    MAS             reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    MENOS           reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    PARENTESISDER   reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    CONCAT          reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    PEKENUN         reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    RAKIN           reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    NEMEL           reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    ID              reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    TUNTENTU        reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    MAY             reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    $end            reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    KUYEN           reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    MAYOR           reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    MENOR           reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    IGUALQUE        reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
+    DISTINTO        reduce using rule 18 (expNumero -> expNumero MAS expNumero .)
     POR             shift and go to state 40
     DIVIDIDO        shift and go to state 41
 
-  ! POR             [ reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .) ]
-  ! DIVIDIDO        [ reduce using rule 18 (expresion_numerica -> expresion_numerica MAS expresion_numerica .) ]
+  ! POR             [ reduce using rule 18 (expNumero -> expNumero MAS expNumero .) ]
+  ! DIVIDIDO        [ reduce using rule 18 (expNumero -> expNumero MAS expNumero .) ]
   ! MAS             [ shift and go to state 38 ]
   ! MENOS           [ shift and go to state 39 ]
 
 
 state 51
 
-    (19) expresion_numerica -> expresion_numerica MENOS expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (19) expNumero -> expNumero MENOS expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    MAS             reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    MENOS           reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    PAREDER         reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    CONCAT          reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    PEKENUN         reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    RAKIN           reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    NEMEL           reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    ID              reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    TUNTENTU        reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    MAY             reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    $end            reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    KUYEN           reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    MAYOR           reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    MENOR           reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    IGUALQUE        reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
-    DISTINTO        reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .)
+    MAS             reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    MENOS           reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    PARENTESISDER   reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    CONCAT          reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    PEKENUN         reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    RAKIN           reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    NEMEL           reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    ID              reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    TUNTENTU        reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    MAY             reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    $end            reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    KUYEN           reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    MAYOR           reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    MENOR           reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    IGUALQUE        reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
+    DISTINTO        reduce using rule 19 (expNumero -> expNumero MENOS expNumero .)
     POR             shift and go to state 40
     DIVIDIDO        shift and go to state 41
 
-  ! POR             [ reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .) ]
-  ! DIVIDIDO        [ reduce using rule 19 (expresion_numerica -> expresion_numerica MENOS expresion_numerica .) ]
+  ! POR             [ reduce using rule 19 (expNumero -> expNumero MENOS expNumero .) ]
+  ! DIVIDIDO        [ reduce using rule 19 (expNumero -> expNumero MENOS expNumero .) ]
   ! MAS             [ shift and go to state 38 ]
   ! MENOS           [ shift and go to state 39 ]
 
 
 state 52
 
-    (20) expresion_numerica -> expresion_numerica POR expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (20) expNumero -> expNumero POR expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    MAS             reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    MENOS           reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    POR             reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    DIVIDIDO        reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    PAREDER         reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    CONCAT          reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    PEKENUN         reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    RAKIN           reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    NEMEL           reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    ID              reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    TUNTENTU        reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    MAY             reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    $end            reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    KUYEN           reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    MAYOR           reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    MENOR           reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    IGUALQUE        reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
-    DISTINTO        reduce using rule 20 (expresion_numerica -> expresion_numerica POR expresion_numerica .)
+    MAS             reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    MENOS           reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    POR             reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    DIVIDIDO        reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    PARENTESISDER   reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    CONCAT          reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    PEKENUN         reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    RAKIN           reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    NEMEL           reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    ID              reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    TUNTENTU        reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    MAY             reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    $end            reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    KUYEN           reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    MAYOR           reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    MENOR           reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    IGUALQUE        reduce using rule 20 (expNumero -> expNumero POR expNumero .)
+    DISTINTO        reduce using rule 20 (expNumero -> expNumero POR expNumero .)
 
   ! MAS             [ shift and go to state 38 ]
   ! MENOS           [ shift and go to state 39 ]
@@ -1057,30 +1057,30 @@ state 52
 
 state 53
 
-    (21) expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (21) expNumero -> expNumero DIVIDIDO expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    MAS             reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    MENOS           reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    POR             reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    DIVIDIDO        reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    PAREDER         reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    CONCAT          reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    PEKENUN         reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    RAKIN           reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    NEMEL           reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    ID              reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    TUNTENTU        reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    MAY             reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    $end            reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    KUYEN           reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    MAYOR           reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    MENOR           reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    IGUALQUE        reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
-    DISTINTO        reduce using rule 21 (expresion_numerica -> expresion_numerica DIVIDIDO expresion_numerica .)
+    MAS             reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    MENOS           reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    POR             reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    DIVIDIDO        reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    PARENTESISDER   reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    CONCAT          reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    PEKENUN         reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    RAKIN           reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    NEMEL           reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    ID              reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    TUNTENTU        reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    MAY             reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    $end            reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    KUYEN           reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    MAYOR           reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    MENOR           reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    IGUALQUE        reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
+    DISTINTO        reduce using rule 21 (expNumero -> expNumero DIVIDIDO expNumero .)
 
   ! MAS             [ shift and go to state 38 ]
   ! MENOS           [ shift and go to state 39 ]
@@ -1090,23 +1090,23 @@ state 53
 
 state 54
 
-    (15) tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU . instrucciones KUYEN
+    (15) instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU . instrucciones KUYEN
     (2) instrucciones -> . instrucciones instruccion
     (5) instrucciones -> . instruccion
-    (6) instruccion -> . pekenun_instr
-    (7) instruccion -> . definicion_instr
-    (8) instruccion -> . asignacion_instr
-    (9) instruccion -> . tuntentu_instr
-    (10) instruccion -> . may_instr
-    (11) instruccion -> . kmay_instr
-    (12) pekenun_instr -> . PEKENUN PAREIZQ expresion_cadena PAREDER
-    (3) definicion_instr -> . RAKIN ID
-    (4) definicion_instr -> . NEMEL ID
-    (13) asignacion_instr -> . ID ASIGNACION expresion_numerica
-    (14) asignacion_instr -> . ID ASIGNACION expresion_cadena
-    (15) tuntentu_instr -> . TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (16) may_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (6) instruccion -> . instPekenun
+    (7) instruccion -> . instDefinicion
+    (8) instruccion -> . instAsignacion
+    (9) instruccion -> . instTuntentu
+    (10) instruccion -> . instMay
+    (11) instruccion -> . instKMay
+    (12) instPekenun -> . PEKENUN PARENTESISIZQ expString PARENTESISDER
+    (3) instDefinicion -> . RAKIN ID
+    (4) instDefinicion -> . NEMEL ID
+    (13) instAsignacion -> . ID ASIGNACION expNumero
+    (14) instAsignacion -> . ID ASIGNACION expString
+    (15) instTuntentu -> . TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (16) instMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
     PEKENUN         shift and go to state 10
     RAKIN           shift and go to state 11
@@ -1117,22 +1117,22 @@ state 54
 
     instrucciones                  shift and go to state 60
     instruccion                    shift and go to state 3
-    pekenun_instr                  shift and go to state 4
-    definicion_instr               shift and go to state 5
-    asignacion_instr               shift and go to state 6
-    tuntentu_instr                 shift and go to state 7
-    may_instr                      shift and go to state 8
-    kmay_instr                     shift and go to state 9
+    instPekenun                    shift and go to state 4
+    instDefinicion                 shift and go to state 5
+    instAsignacion                 shift and go to state 6
+    instTuntentu                   shift and go to state 7
+    instMay                        shift and go to state 8
+    instKMay                       shift and go to state 9
 
 state 55
 
-    (29) expresion_logica -> expresion_numerica MAYOR expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (29) eL -> expNumero MAYOR expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    PAREDER         reduce using rule 29 (expresion_logica -> expresion_numerica MAYOR expresion_numerica .)
+    PARENTESISDER   reduce using rule 29 (eL -> expNumero MAYOR expNumero .)
     MAS             shift and go to state 38
     MENOS           shift and go to state 39
     POR             shift and go to state 40
@@ -1141,13 +1141,13 @@ state 55
 
 state 56
 
-    (30) expresion_logica -> expresion_numerica MENOR expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (30) eL -> expNumero MENOR expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    PAREDER         reduce using rule 30 (expresion_logica -> expresion_numerica MENOR expresion_numerica .)
+    PARENTESISDER   reduce using rule 30 (eL -> expNumero MENOR expNumero .)
     MAS             shift and go to state 38
     MENOS           shift and go to state 39
     POR             shift and go to state 40
@@ -1156,13 +1156,13 @@ state 56
 
 state 57
 
-    (31) expresion_logica -> expresion_numerica IGUALQUE expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (31) eL -> expNumero IGUALQUE expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    PAREDER         reduce using rule 31 (expresion_logica -> expresion_numerica IGUALQUE expresion_numerica .)
+    PARENTESISDER   reduce using rule 31 (eL -> expNumero IGUALQUE expNumero .)
     MAS             shift and go to state 38
     MENOS           shift and go to state 39
     POR             shift and go to state 40
@@ -1171,13 +1171,13 @@ state 57
 
 state 58
 
-    (32) expresion_logica -> expresion_numerica DISTINTO expresion_numerica .
-    (18) expresion_numerica -> expresion_numerica . MAS expresion_numerica
-    (19) expresion_numerica -> expresion_numerica . MENOS expresion_numerica
-    (20) expresion_numerica -> expresion_numerica . POR expresion_numerica
-    (21) expresion_numerica -> expresion_numerica . DIVIDIDO expresion_numerica
+    (32) eL -> expNumero DISTINTO expNumero .
+    (18) expNumero -> expNumero . MAS expNumero
+    (19) expNumero -> expNumero . MENOS expNumero
+    (20) expNumero -> expNumero . POR expNumero
+    (21) expNumero -> expNumero . DIVIDIDO expNumero
 
-    PAREDER         reduce using rule 32 (expresion_logica -> expresion_numerica DISTINTO expresion_numerica .)
+    PARENTESISDER   reduce using rule 32 (eL -> expNumero DISTINTO expNumero .)
     MAS             shift and go to state 38
     MENOS           shift and go to state 39
     POR             shift and go to state 40
@@ -1186,24 +1186,24 @@ state 58
 
 state 59
 
-    (16) may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU . instrucciones KUYEN
-    (17) kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU . instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (16) instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU . instrucciones KUYEN
+    (17) instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU . instrucciones KUYEN KMAY ANTU instrucciones KUYEN
     (2) instrucciones -> . instrucciones instruccion
     (5) instrucciones -> . instruccion
-    (6) instruccion -> . pekenun_instr
-    (7) instruccion -> . definicion_instr
-    (8) instruccion -> . asignacion_instr
-    (9) instruccion -> . tuntentu_instr
-    (10) instruccion -> . may_instr
-    (11) instruccion -> . kmay_instr
-    (12) pekenun_instr -> . PEKENUN PAREIZQ expresion_cadena PAREDER
-    (3) definicion_instr -> . RAKIN ID
-    (4) definicion_instr -> . NEMEL ID
-    (13) asignacion_instr -> . ID ASIGNACION expresion_numerica
-    (14) asignacion_instr -> . ID ASIGNACION expresion_cadena
-    (15) tuntentu_instr -> . TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (16) may_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (6) instruccion -> . instPekenun
+    (7) instruccion -> . instDefinicion
+    (8) instruccion -> . instAsignacion
+    (9) instruccion -> . instTuntentu
+    (10) instruccion -> . instMay
+    (11) instruccion -> . instKMay
+    (12) instPekenun -> . PEKENUN PARENTESISIZQ expString PARENTESISDER
+    (3) instDefinicion -> . RAKIN ID
+    (4) instDefinicion -> . NEMEL ID
+    (13) instAsignacion -> . ID ASIGNACION expNumero
+    (14) instAsignacion -> . ID ASIGNACION expString
+    (15) instTuntentu -> . TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (16) instMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
     PEKENUN         shift and go to state 10
     RAKIN           shift and go to state 11
@@ -1214,31 +1214,31 @@ state 59
 
     instrucciones                  shift and go to state 61
     instruccion                    shift and go to state 3
-    pekenun_instr                  shift and go to state 4
-    definicion_instr               shift and go to state 5
-    asignacion_instr               shift and go to state 6
-    tuntentu_instr                 shift and go to state 7
-    may_instr                      shift and go to state 8
-    kmay_instr                     shift and go to state 9
+    instPekenun                    shift and go to state 4
+    instDefinicion                 shift and go to state 5
+    instAsignacion                 shift and go to state 6
+    instTuntentu                   shift and go to state 7
+    instMay                        shift and go to state 8
+    instKMay                       shift and go to state 9
 
 state 60
 
-    (15) tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones . KUYEN
+    (15) instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones . KUYEN
     (2) instrucciones -> instrucciones . instruccion
-    (6) instruccion -> . pekenun_instr
-    (7) instruccion -> . definicion_instr
-    (8) instruccion -> . asignacion_instr
-    (9) instruccion -> . tuntentu_instr
-    (10) instruccion -> . may_instr
-    (11) instruccion -> . kmay_instr
-    (12) pekenun_instr -> . PEKENUN PAREIZQ expresion_cadena PAREDER
-    (3) definicion_instr -> . RAKIN ID
-    (4) definicion_instr -> . NEMEL ID
-    (13) asignacion_instr -> . ID ASIGNACION expresion_numerica
-    (14) asignacion_instr -> . ID ASIGNACION expresion_cadena
-    (15) tuntentu_instr -> . TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (16) may_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (6) instruccion -> . instPekenun
+    (7) instruccion -> . instDefinicion
+    (8) instruccion -> . instAsignacion
+    (9) instruccion -> . instTuntentu
+    (10) instruccion -> . instMay
+    (11) instruccion -> . instKMay
+    (12) instPekenun -> . PEKENUN PARENTESISIZQ expString PARENTESISDER
+    (3) instDefinicion -> . RAKIN ID
+    (4) instDefinicion -> . NEMEL ID
+    (13) instAsignacion -> . ID ASIGNACION expNumero
+    (14) instAsignacion -> . ID ASIGNACION expString
+    (15) instTuntentu -> . TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (16) instMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
     KUYEN           shift and go to state 62
     PEKENUN         shift and go to state 10
@@ -1249,32 +1249,32 @@ state 60
     MAY             shift and go to state 15
 
     instruccion                    shift and go to state 16
-    pekenun_instr                  shift and go to state 4
-    definicion_instr               shift and go to state 5
-    asignacion_instr               shift and go to state 6
-    tuntentu_instr                 shift and go to state 7
-    may_instr                      shift and go to state 8
-    kmay_instr                     shift and go to state 9
+    instPekenun                    shift and go to state 4
+    instDefinicion                 shift and go to state 5
+    instAsignacion                 shift and go to state 6
+    instTuntentu                   shift and go to state 7
+    instMay                        shift and go to state 8
+    instKMay                       shift and go to state 9
 
 state 61
 
-    (16) may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones . KUYEN
-    (17) kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones . KUYEN KMAY ANTU instrucciones KUYEN
+    (16) instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones . KUYEN
+    (17) instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones . KUYEN KMAY ANTU instrucciones KUYEN
     (2) instrucciones -> instrucciones . instruccion
-    (6) instruccion -> . pekenun_instr
-    (7) instruccion -> . definicion_instr
-    (8) instruccion -> . asignacion_instr
-    (9) instruccion -> . tuntentu_instr
-    (10) instruccion -> . may_instr
-    (11) instruccion -> . kmay_instr
-    (12) pekenun_instr -> . PEKENUN PAREIZQ expresion_cadena PAREDER
-    (3) definicion_instr -> . RAKIN ID
-    (4) definicion_instr -> . NEMEL ID
-    (13) asignacion_instr -> . ID ASIGNACION expresion_numerica
-    (14) asignacion_instr -> . ID ASIGNACION expresion_cadena
-    (15) tuntentu_instr -> . TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (16) may_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (6) instruccion -> . instPekenun
+    (7) instruccion -> . instDefinicion
+    (8) instruccion -> . instAsignacion
+    (9) instruccion -> . instTuntentu
+    (10) instruccion -> . instMay
+    (11) instruccion -> . instKMay
+    (12) instPekenun -> . PEKENUN PARENTESISIZQ expString PARENTESISDER
+    (3) instDefinicion -> . RAKIN ID
+    (4) instDefinicion -> . NEMEL ID
+    (13) instAsignacion -> . ID ASIGNACION expNumero
+    (14) instAsignacion -> . ID ASIGNACION expString
+    (15) instTuntentu -> . TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (16) instMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
     KUYEN           shift and go to state 63
     PEKENUN         shift and go to state 10
@@ -1285,69 +1285,69 @@ state 61
     MAY             shift and go to state 15
 
     instruccion                    shift and go to state 16
-    pekenun_instr                  shift and go to state 4
-    definicion_instr               shift and go to state 5
-    asignacion_instr               shift and go to state 6
-    tuntentu_instr                 shift and go to state 7
-    may_instr                      shift and go to state 8
-    kmay_instr                     shift and go to state 9
+    instPekenun                    shift and go to state 4
+    instDefinicion                 shift and go to state 5
+    instAsignacion                 shift and go to state 6
+    instTuntentu                   shift and go to state 7
+    instMay                        shift and go to state 8
+    instKMay                       shift and go to state 9
 
 state 62
 
-    (15) tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .
+    (15) instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .
 
-    PEKENUN         reduce using rule 15 (tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    RAKIN           reduce using rule 15 (tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    NEMEL           reduce using rule 15 (tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    ID              reduce using rule 15 (tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    TUNTENTU        reduce using rule 15 (tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    MAY             reduce using rule 15 (tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    $end            reduce using rule 15 (tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    KUYEN           reduce using rule 15 (tuntentu_instr -> TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
+    PEKENUN         reduce using rule 15 (instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    RAKIN           reduce using rule 15 (instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    NEMEL           reduce using rule 15 (instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    ID              reduce using rule 15 (instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    TUNTENTU        reduce using rule 15 (instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    MAY             reduce using rule 15 (instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    $end            reduce using rule 15 (instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    KUYEN           reduce using rule 15 (instTuntentu -> TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
 
 
 state 63
 
-    (16) may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .
-    (17) kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN . KMAY ANTU instrucciones KUYEN
+    (16) instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .
+    (17) instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN . KMAY ANTU instrucciones KUYEN
 
-    PEKENUN         reduce using rule 16 (may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    RAKIN           reduce using rule 16 (may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    NEMEL           reduce using rule 16 (may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    ID              reduce using rule 16 (may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    TUNTENTU        reduce using rule 16 (may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    MAY             reduce using rule 16 (may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    $end            reduce using rule 16 (may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
-    KUYEN           reduce using rule 16 (may_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN .)
+    PEKENUN         reduce using rule 16 (instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    RAKIN           reduce using rule 16 (instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    NEMEL           reduce using rule 16 (instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    ID              reduce using rule 16 (instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    TUNTENTU        reduce using rule 16 (instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    MAY             reduce using rule 16 (instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    $end            reduce using rule 16 (instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
+    KUYEN           reduce using rule 16 (instMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN .)
     KMAY            shift and go to state 64
 
 
 state 64
 
-    (17) kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY . ANTU instrucciones KUYEN
+    (17) instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY . ANTU instrucciones KUYEN
 
     ANTU            shift and go to state 65
 
 
 state 65
 
-    (17) kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU . instrucciones KUYEN
+    (17) instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU . instrucciones KUYEN
     (2) instrucciones -> . instrucciones instruccion
     (5) instrucciones -> . instruccion
-    (6) instruccion -> . pekenun_instr
-    (7) instruccion -> . definicion_instr
-    (8) instruccion -> . asignacion_instr
-    (9) instruccion -> . tuntentu_instr
-    (10) instruccion -> . may_instr
-    (11) instruccion -> . kmay_instr
-    (12) pekenun_instr -> . PEKENUN PAREIZQ expresion_cadena PAREDER
-    (3) definicion_instr -> . RAKIN ID
-    (4) definicion_instr -> . NEMEL ID
-    (13) asignacion_instr -> . ID ASIGNACION expresion_numerica
-    (14) asignacion_instr -> . ID ASIGNACION expresion_cadena
-    (15) tuntentu_instr -> . TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (16) may_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (6) instruccion -> . instPekenun
+    (7) instruccion -> . instDefinicion
+    (8) instruccion -> . instAsignacion
+    (9) instruccion -> . instTuntentu
+    (10) instruccion -> . instMay
+    (11) instruccion -> . instKMay
+    (12) instPekenun -> . PEKENUN PARENTESISIZQ expString PARENTESISDER
+    (3) instDefinicion -> . RAKIN ID
+    (4) instDefinicion -> . NEMEL ID
+    (13) instAsignacion -> . ID ASIGNACION expNumero
+    (14) instAsignacion -> . ID ASIGNACION expString
+    (15) instTuntentu -> . TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (16) instMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
     PEKENUN         shift and go to state 10
     RAKIN           shift and go to state 11
@@ -1358,31 +1358,31 @@ state 65
 
     instrucciones                  shift and go to state 66
     instruccion                    shift and go to state 3
-    pekenun_instr                  shift and go to state 4
-    definicion_instr               shift and go to state 5
-    asignacion_instr               shift and go to state 6
-    tuntentu_instr                 shift and go to state 7
-    may_instr                      shift and go to state 8
-    kmay_instr                     shift and go to state 9
+    instPekenun                    shift and go to state 4
+    instDefinicion                 shift and go to state 5
+    instAsignacion                 shift and go to state 6
+    instTuntentu                   shift and go to state 7
+    instMay                        shift and go to state 8
+    instKMay                       shift and go to state 9
 
 state 66
 
-    (17) kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones . KUYEN
+    (17) instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones . KUYEN
     (2) instrucciones -> instrucciones . instruccion
-    (6) instruccion -> . pekenun_instr
-    (7) instruccion -> . definicion_instr
-    (8) instruccion -> . asignacion_instr
-    (9) instruccion -> . tuntentu_instr
-    (10) instruccion -> . may_instr
-    (11) instruccion -> . kmay_instr
-    (12) pekenun_instr -> . PEKENUN PAREIZQ expresion_cadena PAREDER
-    (3) definicion_instr -> . RAKIN ID
-    (4) definicion_instr -> . NEMEL ID
-    (13) asignacion_instr -> . ID ASIGNACION expresion_numerica
-    (14) asignacion_instr -> . ID ASIGNACION expresion_cadena
-    (15) tuntentu_instr -> . TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (16) may_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN
-    (17) kmay_instr -> . MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
+    (6) instruccion -> . instPekenun
+    (7) instruccion -> . instDefinicion
+    (8) instruccion -> . instAsignacion
+    (9) instruccion -> . instTuntentu
+    (10) instruccion -> . instMay
+    (11) instruccion -> . instKMay
+    (12) instPekenun -> . PEKENUN PARENTESISIZQ expString PARENTESISDER
+    (3) instDefinicion -> . RAKIN ID
+    (4) instDefinicion -> . NEMEL ID
+    (13) instAsignacion -> . ID ASIGNACION expNumero
+    (14) instAsignacion -> . ID ASIGNACION expString
+    (15) instTuntentu -> . TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (16) instMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN
+    (17) instKMay -> . MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN
 
     KUYEN           shift and go to state 67
     PEKENUN         shift and go to state 10
@@ -1393,29 +1393,29 @@ state 66
     MAY             shift and go to state 15
 
     instruccion                    shift and go to state 16
-    pekenun_instr                  shift and go to state 4
-    definicion_instr               shift and go to state 5
-    asignacion_instr               shift and go to state 6
-    tuntentu_instr                 shift and go to state 7
-    may_instr                      shift and go to state 8
-    kmay_instr                     shift and go to state 9
+    instPekenun                    shift and go to state 4
+    instDefinicion                 shift and go to state 5
+    instAsignacion                 shift and go to state 6
+    instTuntentu                   shift and go to state 7
+    instMay                        shift and go to state 8
+    instKMay                       shift and go to state 9
 
 state 67
 
-    (17) kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .
+    (17) instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .
 
-    PEKENUN         reduce using rule 17 (kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
-    RAKIN           reduce using rule 17 (kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
-    NEMEL           reduce using rule 17 (kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
-    ID              reduce using rule 17 (kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
-    TUNTENTU        reduce using rule 17 (kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
-    MAY             reduce using rule 17 (kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
-    $end            reduce using rule 17 (kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
-    KUYEN           reduce using rule 17 (kmay_instr -> MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
+    PEKENUN         reduce using rule 17 (instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
+    RAKIN           reduce using rule 17 (instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
+    NEMEL           reduce using rule 17 (instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
+    ID              reduce using rule 17 (instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
+    TUNTENTU        reduce using rule 17 (instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
+    MAY             reduce using rule 17 (instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
+    $end            reduce using rule 17 (instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
+    KUYEN           reduce using rule 17 (instKMay -> MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for CONCAT in state 49 resolved as shift
-WARNING: reduce/reduce conflict in state 30 resolved using rule (asignacion_instr -> ID ASIGNACION expresion_numerica)
-WARNING: rejected rule (expresion_cadena -> expresion_numerica) in state 30
+WARNING: reduce/reduce conflict in state 30 resolved using rule (instAsignacion -> ID ASIGNACION expNumero)
+WARNING: rejected rule (expString -> expNumero) in state 30

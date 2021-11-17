@@ -1,5 +1,4 @@
 import ply.lex as lex
-from instrucciones import *
 
 #Palabras reservadas y Tokens
 aRes = [
@@ -17,7 +16,7 @@ aRes = [
 ]
 
 tokens = aRes + ['ID','INT','FLOTANTE','MAS','MENOS','POR','DIVIDIDO','ASIGNACION',
-                 'DISTINTO','MENOR','MAYOR','PAREIZQ','PAREDER','COMENTARIO','POTENCIA',
+                 'DISTINTO','MENOR','MAYOR','PARENTESISIZQ','PARENTESISDER','COMENTARIO','POTENCIA',
                  'COMENTARIO_MULTILINEA','IGUALQUE','CADENA_TEXTO','CONCAT','COMA']
 
 aResultado = []
@@ -32,10 +31,9 @@ t_ASIGNACION = r'='
 t_DISTINTO = r'<>'
 t_MENOR = r'<'
 t_MAYOR = r'>'
-t_PAREIZQ = r'\('
-t_PAREDER = r'\)'
+t_PARENTESISIZQ = r'\('
+t_PARENTESISDER = r'\)'
 t_COMA = r','
-t_POTENCIA = r'\^'
 t_IGUALQUE = r'=='
 t_CONCAT = r'&'
 

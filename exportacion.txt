@@ -24,10 +24,10 @@ Analizador Lexico
 9. Linea: 6 Posicion: 57 Tipo Variable: ASIGNACION Valor: =
 10. Linea: 6 Posicion: 59 Tipo Variable: CADENA_TEXTO Valor: cadena de texto
 11. Linea: 8 Posicion: 78 Tipo Variable: ID Valor: pekenunnn
-12. Linea: 8 Posicion: 87 Tipo Variable: PAREIZQ Valor: (
+12. Linea: 8 Posicion: 87 Tipo Variable: PARENTESISIZQ Valor: (
 13. Linea: 8 Posicion: 88 Tipo Variable: ID Valor: w
-14. Linea: 8 Posicion: 89 Tipo Variable: PAREDER Valor: )
+14. Linea: 8 Posicion: 89 Tipo Variable: PARENTESISDER Valor: )
  
 Analizador Sintactico
 #---------------------------------------------------------------------------#
->> ERROR: sintaxis incorrecta de tipo PAREIZQ cerca de (
+>> ERROR: sintaxis incorrecta de tipo PARENTESISIZQ cerca de (

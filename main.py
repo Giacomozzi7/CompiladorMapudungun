@@ -51,7 +51,7 @@ class ventanaPrincipal(QMainWindow):
     def analizaSintax(self):
         #self.borrarData()
         sData = self.txtCodigo.toPlainText().strip()
-        self.aResultadoS = ast.prueba_sintactica(sData)
+        self.aResultadoS = ast.analizadorSintactico(sData)
         sCad = ''
         for fila in self.aResultadoS:
             sCad += fila + '\n'

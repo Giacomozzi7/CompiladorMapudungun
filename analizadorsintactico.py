@@ -1,7 +1,6 @@
-import ply.lex as lex
-from instrucciones import *
+from clases_exp import *
 from analizadorlexico import *
-import TabSimbolos
+from tablasimbolos import Simbolo,TablaDeSimbolos
 import ply.yacc as yacc
 nFlag = 0
 aResultado=[]
@@ -15,7 +14,7 @@ precedence = (
     ('left','MENOR','MAYOR'),
     ('left','MAS', 'MENOS'),
     ('left','POR','DIVIDIDO'),
-    ('left','PAREIZQ','PAREDER')
+    ('left','PARENTESISIZQ','PARENTESISDER')
 )
 
 def p_INIT(t) :
@@ -28,7 +27,7 @@ def p_LISTA_INSTRUCCIONES(t) :
     t[0] = t[1]
 
 def p_DEFINICION_INSTRUCCION(t) :
-    '''definicion_instr   : RAKIN ID
+    '''instDefinicion   : RAKIN ID
                           | NEMEL ID'''
     if   t[1] == "rakin": t[0] = DefVar(t[2],t[1])
     elif t[1] == "nemel": t[0] = DefVar(t[2],t[1])
@@ -38,189 +37,171 @@ def p_INSTRUCCIONES_INSTRUCCION(t) :
     t[0] = [t[1]]
 
 def p_INSTRUCCION(t) :
-    '''instruccion      : pekenun_instr
-                        | definicion_instr
-                        | asignacion_instr
-                        | tuntentu_instr
-                        | may_instr
-                        | kmay_instr'''
+    '''instruccion      : instPekenun
+                        | instDefinicion
+                        | instAsignacion
+                        | instTuntentu
+                        | instMay
+                        | instKMay'''
     t[0] = t[1]
 
 def p_PEKENUN_INSTRUCCCION(t) :
-    'pekenun_instr     : PEKENUN PAREIZQ expresion_cadena PAREDER'
+    'instPekenun     : PEKENUN PARENTESISIZQ expString PARENTESISDER'
     t[0] =Pekenun(t[3])
 
 def p_ASIGNAVARIABLE_INSTRUCCION(t) :
-    '''asignacion_instr   : ID ASIGNACION expresion_numerica
-                          | ID ASIGNACION expresion_cadena '''
-    if   (type(t[3].val)==int) : 
+    '''instAsignacion   : ID ASIGNACION expNumero
+                          | ID ASIGNACION expString '''
+    if   (type(t[3].valor)==int) : 
         t[0] = AsignaVariable(t[1], t[3], 0)
 
-    elif (type(t[3].val)==str) : 
+    elif (type(t[3].valor)==str) : 
         t[0]  = AsignaVariable(t[1], t[3],1)
 
 def p_TUNTENTU_INSTRUCCION(t) :
-    'tuntentu_instr     : TUNTENTU PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN'
+    'instTuntentu     : TUNTENTU PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN'
     t[0] =Tuntentu(t[3], t[6])
 
 def p_MAY_INSTRUCCION(t) :
-    'may_instr           : MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN'
+    'instMay           : MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN'
     t[0] =May(t[3], t[6])
 
 def p_KMAY_INSTRUCCION(t) :
-    'kmay_instr      : MAY PAREIZQ expresion_logica PAREDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN'
+    'instKMay      : MAY PARENTESISIZQ eL PARENTESISDER ANTU instrucciones KUYEN KMAY ANTU instrucciones KUYEN'
     t[0] =KMay(t[3], t[6], t[10])
 
 
 #Definicion de expresiones  para el analizador sintactico
 #--------------------------------------------------------------------------------------------
 def p_BIN_EXPRESION(t):
-    '''expresion_numerica : expresion_numerica MAS expresion_numerica
-                        | expresion_numerica MENOS expresion_numerica
-                        | expresion_numerica POR expresion_numerica
-                        | expresion_numerica DIVIDIDO expresion_numerica
+    '''expNumero : expNumero MAS expNumero
+                        | expNumero MENOS expNumero
+                        | expNumero POR expNumero
+                        | expNumero DIVIDIDO expNumero
                         '''
-    if t[2] == '+'  : t[0] = ExpresionBinaria(t[1], t[3], "+")
-    elif t[2] == '-': t[0] = ExpresionBinaria(t[1], t[3], "-")
-    elif t[2] == '*': t[0] = ExpresionBinaria(t[1], t[3], "*")
-    elif t[2] == '/': t[0] = ExpresionBinaria(t[1], t[3], "/")
+    if   t[2] == '+': t[0] = EXP_BIN(t[1], t[3], "+")
+    elif t[2] == '-': t[0] = EXP_BIN(t[1], t[3], "-")
+    elif t[2] == '*': t[0] = EXP_BIN(t[1], t[3], "*")
+    elif t[2] == '/': t[0] = EXP_BIN(t[1], t[3], "/")
 
 def p_AGRUP_EXPRESION(t):
-    'expresion_numerica : PAREIZQ expresion_numerica PAREDER'
+    'expNumero : PARENTESISIZQ expNumero PARENTESISDER'
     t[0] = t[2]
 
 def p_NUMERO_EXPRESION(t):
-    '''expresion_numerica : INT
+    '''expNumero : INT
                           | FLOTANTE'''
-    t[0] = ExpresionNumero(t[1])
+    t[0] = EXP_NUM(t[1])
 
 def p_ID_EXPRESION(t):
-    'expresion_numerica   : ID'
-    t[0] = ExpresionIdentificador(t[1])
+    'expNumero   : ID'
+    t[0] = EXP_ID(t[1])
 
 def p_CADENATEXTO_EXPRESION(t) :
-    'expresion_cadena     : CADENA_TEXTO'
-    t[0] = ExpresionDobleComilla(t[1])
+    'expString     : CADENA_TEXTO'
+    t[0] = EXP_DOBLE(t[1])
 
 def p_CADENANUM_EXPRESION(t) :
-    'expresion_cadena     : expresion_numerica'
-    t[0] = ExpresionCadenaNumerico(t[1])
+    'expString     : expNumero'
+    t[0] = EXP_CAD(t[1])
 
 def p_CONCAT_EXPRESION(t) :
-    'expresion_cadena     : expresion_cadena CONCAT expresion_cadena'
-    t[0] = ExpresionConcatenar(t[1], t[3])
+    'expString     : expString CONCAT expString'
+    t[0] = EXP_CONCAT(t[1], t[3])
 
 def p_LOGICO_EXPRESION(t) :
-    '''expresion_logica : expresion_numerica MAYOR expresion_numerica
-                        | expresion_numerica MENOR expresion_numerica
-                        | expresion_numerica IGUALQUE expresion_numerica
-                        | expresion_numerica DISTINTO expresion_numerica'''
-    if t[2] == '>'    : t[0] = ExpresionLogica(t[1], t[3], '>')
-    elif t[2] == '<'  : t[0] = ExpresionLogica(t[1], t[3], '<')
-    elif t[2] == '==' : t[0] = ExpresionLogica(t[1], t[3], '=')
-    elif t[2] == '!=' : t[0] = ExpresionLogica(t[1], t[3], '<>')
+    '''eL : expNumero MAYOR expNumero
+                        | expNumero MENOR expNumero
+                        | expNumero IGUALQUE expNumero
+                        | expNumero DISTINTO expNumero'''
+    if   t[2] == '>'  : t[0] = EXP_LOGICA(t[1], t[3], '>')
+    elif t[2] == '<'  : t[0] = EXP_LOGICA(t[1], t[3], '<')
+    elif t[2] == '==' : t[0] = EXP_LOGICA(t[1], t[3], '=')
+    elif t[2] == '!=' : t[0] = EXP_LOGICA(t[1], t[3], '<>')
 
 def p_error(t):
     global nFlag
     if t: 
-        resultado = f">> ERROR: sintaxis incorrecta de tipo {t.type} cerca de {t.value}"
+        sError = f">> ERROR: sintaxis incorrecta de tipo {t.type} cerca de {t.value}"
         nFlag=1
-        aResultado.append(resultado)
+        aResultado.append(sError)
 
-
+#Se resuelven las palabras reservadas Tuntentu, May y KMay
 parser = yacc.yacc()
-def resolverTuntentu(instr, ts) :
-    while operacionLogica(instr.expLogica, ts) :
-        ts_local = TabSimbolos.TablaDeSimbolos(ts.simbolos)
-        generarInstrucciones(instr.instrucciones, ts_local)
+def resolverTuntentu(objInstruccion, objTS) :
+    while operacionLogica(objInstruccion.eL, objTS) :
+        generarInstrucciones(objInstruccion.aInst, TablaDeSimbolos(objTS.simbolos))
 
-def resolverMay(instr, ts) :
-    if operacionLogica(instr.expLogica, ts) :
-        ts_local = TabSimbolos.TablaDeSimbolos(ts.simbolos)
-        generarInstrucciones(instr.instrucciones, ts_local)
+def resolverMay(objInstruccion, objTS) :
+    if operacionLogica(objInstruccion.eL, objTS) :
+        generarInstrucciones(objInstruccion.aInst, TablaDeSimbolos(objTS.simbolos))
 
-def resolverKMay(instr, ts) :
-    if operacionLogica(instr.expLogica, ts):
-        ts_local = TabSimbolos.TablaDeSimbolos(ts.simbolos)
-        generarInstrucciones(instr.instrliVerdadero, ts_local)
+def resolverKMay(objInstruccion, objTS) :
+    if operacionLogica(objInstruccion.eL, objTS):
+        generarInstrucciones(objInstruccion.aInstMayV, TablaDeSimbolos(objTS.simbolos))
     else :
-        ts_local = TabSimbolos.TablaDeSimbolos(ts.simbolos)
-        generarInstrucciones(instr.instrliFalso, ts_local)
+        generarInstrucciones(objInstruccion.aInstMayF, TablaDeSimbolos(objTS.simbolos))
 
-def procesarString(expCad, ts) :
-    if isinstance(expCad, ExpresionConcatenar) :
-        exp1 = procesarString(expCad.exp1, ts)
-        exp2 = procesarString(expCad.exp2, ts)
-        return exp1 + exp2
-    elif isinstance(expCad, ExpresionDobleComilla) :
-        return expCad.val
-    elif isinstance(expCad, ExpresionCadenaNumerico) :
-        return str(operacionAritmetica(expCad.exp, ts))
-    else : 
-        print('>> ERROR: Cadena no válida')
+def procesarString(expCad, objTS) :
+    if type(expCad) == EXP_CONCAT      : return procesarString(expCad.expresion_1, objTS) + procesarString(expCad.expresion_2, objTS)
+    elif type(expCad) == EXP_DOBLE     : return expCad.valor #Expresion para cadena con doble comilla
+    elif type(expCad) == EXP_CAD       : return str(operacionAritmetica(expCad.exp, objTS))
 
-def procesarDef(instr, ts) :
-    if instr.tipo == "rakin": simbolo = TabSimbolos.Simbolo(instr.id, TabSimbolos.TIPO_DATO.RAKIN, 0)
-    if instr.tipo == "nemel": simbolo = TabSimbolos.Simbolo(instr.id, TabSimbolos.TIPO_DATO.NEMEL, "")
-    ts.addSimbolo(simbolo)
+def procesarDef(objInstruccion, objTS) :
+    if objInstruccion.tipo == "rakin": simbolo = Simbolo(objInstruccion.id, "RAKIN", 0)
+    if objInstruccion.tipo == "nemel": simbolo = Simbolo(objInstruccion.id, "NEMEL", "")
+    objTS.addSimbolo(simbolo)
 
-def procesarAsign(instr, ts) :
-    if instr.n == 0:
-        simbolo = TabSimbolos.Simbolo(instr.id, TabSimbolos.TIPO_DATO.RAKIN, operacionAritmetica(instr.exp, ts))
-    if instr.n == 1:
-        simbolo = TabSimbolos.Simbolo(instr.id, TabSimbolos.TIPO_DATO.NEMEL, procesarString(instr.exp, ts))
-    ts.UpdSimbolo(simbolo)
+def procesarAsign(objInstruccion, objTS) :
+    if objInstruccion.nVal == 0:
+        simbolo = Simbolo(objInstruccion.id, "RAKIN", operacionAritmetica(objInstruccion.exp, objTS))
+    if objInstruccion.nVal == 1:
+        simbolo = Simbolo(objInstruccion.id, "NEMEL", procesarString(objInstruccion.exp, objTS))
+    objTS.UpdSimbolo(simbolo)
 
 #Procesamiento de operaciones lógicas
-def operacionLogica(expLog, ts) :
-    exp1 = operacionAritmetica(expLog.exp1, ts)
-    exp2 = operacionAritmetica(expLog.exp2, ts)
-    if expLog.operador == '>' : return exp1 > exp2
-    if expLog.operador == '<' : return exp1 < exp2
-    if expLog.operador == '=' : return exp1 == exp2
-    if expLog.operador == '<>' : return exp1 != exp2
+def operacionLogica(expresionLogica, objTS) :
+    aExp = [operacionAritmetica(expresionLogica.expresion_1, objTS),operacionAritmetica(expresionLogica.expresion_2, objTS)]
+    if expresionLogica.op == '>'  : return aExp[0] > aExp[1]
+    if expresionLogica.op == '<'  : return aExp[0] < aExp[1]
+    if expresionLogica.op == '='  : return aExp[0] == aExp[1]
+    if expresionLogica.op == '<>' : return aExp[0] != aExp[1]
 
-def operacionAritmetica(expNum, ts) :
-    if isinstance(expNum, ExpresionBinaria) :
-        exp1 = operacionAritmetica(expNum.exp1, ts)
-        exp2 = operacionAritmetica(expNum.exp2, ts)
-        if expNum.operador == '+' : return exp1 + exp2
-        if expNum.operador == '-' : return exp1 - exp2
-        if expNum.operador == '*' : return exp1 * exp2
-        if expNum.operador == '/' : return exp1 / exp2
+#Procesamiento de operaciones aritmeticas
+def operacionAritmetica(expresionNumerica, objTS) :
+    if type(expresionNumerica) == EXP_BIN:
+        aExp = [operacionAritmetica(expresionNumerica.expresion_1, objTS),operacionAritmetica(expresionNumerica.expresion_2, objTS)]
+        if expresionNumerica.op == '+' : return aExp[0] + aExp[1]
+        if expresionNumerica.op == '-' : return aExp[0] - aExp[1]
+        if expresionNumerica.op == '*' : return aExp[0] * aExp[1]
+        if expresionNumerica.op == '/' : return aExp[0] / aExp[1]
 
-    elif isinstance(expNum, ExpresionNegativo) :
-        exp = operacionAritmetica(expNum.exp, ts)
-        return exp * -1
-
-    elif isinstance(expNum, ExpresionNumero) :
-        return expNum.val
-
-    elif isinstance(expNum, ExpresionIdentificador) :
-        return ts.getSimbolo(expNum.id).valor
+    elif type(expresionNumerica) == EXP_NEG:        return operacionAritmetica(expresionNumerica.exp, objTS) * -1
+    elif type(expresionNumerica) == EXP_NUM:        return expresionNumerica.valor
+    elif type(expresionNumerica) == EXP_ID:         return objTS.getSimbolo(expresionNumerica.id).valor
 
 #Fase de prueba y generacion de instrucciones para ser mostradas en la interfaz
-def prueba_sintactica(data):
+def analizadorSintactico(sData):
     global nFlag
-    instrucciones = parser.parse(data)
+    aInstrucciones = parser.parse(sData)
     nFlag = 0
-    ts_global = TabSimbolos.TablaDeSimbolos()
-    return generarInstrucciones(instrucciones, ts_global)
+    return generarInstrucciones(aInstrucciones, TablaDeSimbolos())
 
-def generarInstrucciones(instrucciones, ts) :
+def generarInstrucciones(aInstrucciones, objTS) :
     global aResultado
     global nFlag
     try:
-        for instr in instrucciones :
+        for objInstruccion in aInstrucciones :
+            print(f'instrucciones : {aInstrucciones}')
             if (nFlag!=0): break
-            if isinstance(instr, Pekenun) : 
-                sP = '>> %s'%(procesarString(instr.cad, ts))
+            if isinstance(objInstruccion, Pekenun) : 
+                sP = '>> %s'%(procesarString(objInstruccion.cad, objTS))
                 aResultado.append(sP)
-            elif isinstance(instr, DefVar) : procesarDef(instr, ts)
-            elif isinstance(instr, AsignaVariable) : procesarAsign(instr, ts)
-            elif isinstance(instr, Tuntentu) : resolverTuntentu(instr, ts)
-            elif isinstance(instr, May) : resolverMay(instr, ts)
-            elif isinstance(instr, KMay) : resolverKMay(instr, ts)
+            elif type(objInstruccion) == DefVar:          procesarDef(objInstruccion, objTS)
+            elif type(objInstruccion) == AsignaVariable:  procesarAsign(objInstruccion, objTS)
+            elif type(objInstruccion) == Tuntentu:        resolverTuntentu(objInstruccion, objTS)
+            elif type(objInstruccion) == May :            resolverMay(objInstruccion, objTS)
+            elif type(objInstruccion) == KMay :           resolverKMay(objInstruccion, objTS)
             else : aResultado.append('>> ERROR: La instrucción es inválida')
     except: pass
     return aResultado
